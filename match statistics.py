@@ -1,8 +1,4 @@
-
 class MatchStatistics:
-    win = 0
-    losses = 0
-
     def __init__(self, wins, losses):
         self.wins = wins
         self.losses = losses
@@ -15,6 +11,3 @@ class MatchStatistics:
 
     def lose_percentage(self):
         return self.losses / self.total_matches()
-
-
-
