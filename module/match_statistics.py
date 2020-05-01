@@ -7,7 +7,20 @@ class MatchStatistics:
         return self.wins + self.losses
 
     def win_percentage(self):
-        return self.wins / self.total_matches()
+        if self.total_matches() == 0:
+            return 0
+        else:
+            return self.wins / self.total_matches()
 
     def lose_percentage(self):
-        return self.losses / self.total_matches()
+        if self.total_matches() ==0:
+            return 0
+        else:
+            return self.losses / self.total_matches()
+
+
+stats = MatchStatistics(0, 0)
+
+
+print(stats.win_percentage())
+
