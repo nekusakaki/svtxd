@@ -17,6 +17,5 @@ class DatabaseInterface:
         return self._c.fetchone()
 
 
-db = DatabaseInterface()
-print(db.get_card(111541020))
+
 
