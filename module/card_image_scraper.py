@@ -15,6 +15,6 @@ num_of_cards = len(card_ids)
 
 for index, card_id in enumerate(card_ids):
     card_image_url = "https://shadowverse-portal.com/image/card/phase2/common/L/L_" + str(card_id) + ".jpg"
-    images_path = "../images/"
+    images_path = "../images/card_flair/"
     print("Downloading image " + str(index + 1) + " out of " + str(num_of_cards) + ".")
     dl_card_jpg(card_image_url, images_path, str(card_id))
