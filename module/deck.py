@@ -13,6 +13,7 @@ class Deck:
         self._stats = MatchStatistics(0, 0)
         self._history = MatchHistory()
         self._cards = []
+        self._card_counts = {}
         self.name = name
 
     @staticmethod
@@ -57,11 +58,33 @@ class Deck:
         for card_id in self._card_ids:
             self._cards.append(Card(card_id))
 
+    def _generate_card_counts(self):
+        self._card_counts.clear()
+        for card_id in self._card_ids:
+            if card_id in self._card_counts:
+                self._card_counts[card_id] += 1
+            else:
+                self._card_counts[card_id] = 1
+
     def cards(self):
         if not self._cards:
             self._generate_cards()
 
         return self._cards
+
+    def card_list(self):
+        card_ids = []
+        for card_id in self._card_ids:
+            if card_id not in card_ids:
+                card_ids.append(card_id)
+
+        return card_ids
+
+    def card_counts(self):
+        if not self._card_counts:
+            self._generate_card_counts()
+
+        return self._card_counts
 
     def vials(self):
         total_vials = 0
@@ -104,3 +127,11 @@ class Deck:
 
     def get_matches(self):
         return self._history.get_matches()
+
+    def card_breakdown(self):
+        card_breakdown = {'Follower': 0, 'Amulet': 0, 'Spell': 0}
+        for card in self.cards():
+            card_breakdown[card.get_card_type()] += 1
+
+        return card_breakdown
+
