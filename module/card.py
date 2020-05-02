@@ -30,4 +30,12 @@ class Card:
     def __repr__(self):
         return f'{self.card_name}'
 
+    def get_card_type(self):
+        card_types = {
+            1: 'Follower',
+            2: 'Amulet',
+            3: 'Amulet',
+            4: 'Spell',
+        }
+        return card_types.get(self.card_type)
 
