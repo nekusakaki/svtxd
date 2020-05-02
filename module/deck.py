@@ -48,7 +48,8 @@ class Deck:
 
     def save_to_file(self, file_path):
         self._cards.clear()
-        full_path = file_path + self.name + '.deck'
+        file_name = self.name.replace(' ', '_')
+        full_path = file_path + file_name + '.dck'
         with open(full_path, 'wb') as output_file:
             pickle.dump(self, output_file, pickle.HIGHEST_PROTOCOL)
 
@@ -159,4 +160,3 @@ class Deck:
 
     def total_cards(self):
         return len(self._card_ids)
-
