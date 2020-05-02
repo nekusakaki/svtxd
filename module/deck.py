@@ -2,6 +2,7 @@ from match_statistics import MatchStatistics
 import json
 from urllib.request import urlopen
 from card import Card
+import pickle
 
 
 class Deck:
@@ -35,11 +36,22 @@ class Deck:
         else:
             raise ValueError("Deck code does not exist.")
 
+    @staticmethod
+    def generate_from_file(file_path):
+        with open(file_path, 'rb') as input_file:
+            return pickle.load(input_file)
+
+    def save_to_file(self, file_path):
+        self._cards.clear()
+        full_path = file_path + self.name + '.deck'
+        with open(full_path, 'wb') as output_file:
+            pickle.dump(self, output_file, pickle.HIGHEST_PROTOCOL)
+
     def rename(self, new_name):
         self.name = new_name
 
     def _generate_cards(self):
-        self._cards = []
+        self._cards.clear()
         for card_id in self._card_ids:
             self._cards.append(Card(card_id))
 
@@ -72,20 +84,16 @@ class Deck:
     def win_rate(self):
         return self._stats.win_percentage() * 100.0
 
-    def increment_wins(self):
+    def increment_wins(self, clan):
         self._stats.increment_wins()
-
-    def increment_losses(self):
-        self._stats.increment_losses()
-
-    def clan_wins(self):
-        return self._stats.clan_wins
-
-    def increment_clan_wins(self, clan):
         self._stats.increment_clan_wins(clan)
 
-    def clan_losses(self):
-        return self._stats.clan_losses
-
-    def increment_clan_losses(self, clan):
+    def increment_losses(self, clan):
+        self._stats.increment_losses()
         self._stats.increment_clan_losses(clan)
+
+    def clan_wins(self, clan):
+        return self._stats.clan_wins[clan - 1]
+
+    def clan_losses(self, clan):
+        return self._stats.clan_losses[clan - 1]
