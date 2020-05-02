@@ -14,6 +14,8 @@ class Deck:
         self._history = MatchHistory()
         self._cards = []
         self._card_counts = {}
+        self._card_breakdown = {}
+        self._cost_breakdown = {}
         self.name = name
 
     @staticmethod
@@ -129,25 +131,31 @@ class Deck:
         return self._history.get_matches()
 
     def card_breakdown(self):
-        card_breakdown = {'Follower': 0, 'Amulet': 0, 'Spell': 0}
-        for card in self.cards():
-            card_breakdown[card.get_card_type()] += 1
+        if not self._card_breakdown:
+            card_breakdown = {'Follower': 0, 'Amulet': 0, 'Spell': 0}
+            for card in self.cards():
+                card_breakdown[card.get_card_type()] += 1
 
-        return card_breakdown
+            self._card_breakdown = card_breakdown
+
+        return self._card_breakdown
 
     def cost_breakdown(self):
-        cost_breakdown = {0: [0, 0, 0], 1: [0, 0, 0], 2: [0, 0, 0], 3: [0, 0, 0], 4: [0, 0, 0],
-                          5: [0, 0, 0], 6: [0, 0, 0], 7: [0, 0, 0], '8+': [0, 0, 0]}
+        if not self._cost_breakdown:
+            cost_breakdown = {0: [0, 0, 0], 1: [0, 0, 0], 2: [0, 0, 0], 3: [0, 0, 0], 4: [0, 0, 0],
+                              5: [0, 0, 0], 6: [0, 0, 0], 7: [0, 0, 0], '8+': [0, 0, 0]}
 
-        card_types = {'Follower': 0, 'Amulet': 1, 'Spell': 2}
+            card_types = {'Follower': 0, 'Amulet': 1, 'Spell': 2}
 
-        for card in self.cards():
-            if card.cost < 8:
-                cost_breakdown[card.cost][card_types[card.get_card_type()]] += 1
-            else:
-                cost_breakdown['8+'][card_types[card.get_card_type()]] += 1
+            for card in self.cards():
+                if card.cost < 8:
+                    cost_breakdown[card.cost][card_types[card.get_card_type()]] += 1
+                else:
+                    cost_breakdown['8+'][card_types[card.get_card_type()]] += 1
 
-        return cost_breakdown
+            self._cost_breakdown = cost_breakdown
+
+        return self._cost_breakdown
 
     def total_cards(self):
         return len(self._card_ids)
