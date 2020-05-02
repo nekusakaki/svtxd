@@ -39,3 +39,5 @@ class Card:
         }
         return card_types.get(self.card_type)
 
+
+print(Card(106111010).get_card_type())
