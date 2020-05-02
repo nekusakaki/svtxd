@@ -48,3 +48,5 @@ for index, card_id in enumerate(card_ids):
 
     print('Inserting image ' + str(index + 1) + ' out of ' + str(num_of_cards) + '.')
     insert_card_image(card_id, data)
+
+conn.close()
