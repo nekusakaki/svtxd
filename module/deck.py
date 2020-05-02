@@ -1,4 +1,5 @@
 from match_statistics import MatchStatistics
+from match_history import MatchHistory
 import json
 from urllib.request import urlopen
 from card import Card
@@ -10,6 +11,7 @@ class Deck:
         self._card_ids = card_ids
         self._clan = clan
         self._stats = MatchStatistics(0, 0)
+        self._history = MatchHistory()
         self._cards = []
         self.name = name
 
@@ -84,16 +86,21 @@ class Deck:
     def win_rate(self):
         return self._stats.win_percentage() * 100.0
 
-    def increment_wins(self, clan):
+    def increment_wins(self, clan, duration):
         self._stats.increment_wins()
         self._stats.increment_clan_wins(clan)
+        self._history.add_match(clan, True, duration)
 
-    def increment_losses(self, clan):
+    def increment_losses(self, clan, duration):
         self._stats.increment_losses()
         self._stats.increment_clan_losses(clan)
+        self._history.add_match(clan, False, duration)
 
     def clan_wins(self, clan):
         return self._stats.clan_wins[clan - 1]
 
     def clan_losses(self, clan):
         return self._stats.clan_losses[clan - 1]
+
+    def get_matches(self):
+        return self._history.get_matches()
