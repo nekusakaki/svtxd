@@ -135,3 +135,20 @@ class Deck:
 
         return card_breakdown
 
+    def cost_breakdown(self):
+        cost_breakdown = {0: [0, 0, 0], 1: [0, 0, 0], 2: [0, 0, 0], 3: [0, 0, 0], 4: [0, 0, 0],
+                          5: [0, 0, 0], 6: [0, 0, 0], 7: [0, 0, 0], '8+': [0, 0, 0]}
+
+        card_types = {'Follower': 0, 'Amulet': 1, 'Spell': 2}
+
+        for card in self.cards():
+            if card.cost < 8:
+                cost_breakdown[card.cost][card_types[card.get_card_type()]] += 1
+            else:
+                cost_breakdown['8+'][card_types[card.get_card_type()]] += 1
+
+        return cost_breakdown
+
+    def total_cards(self):
+        return len(self._card_ids)
+
