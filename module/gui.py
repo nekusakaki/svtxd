@@ -459,6 +459,8 @@ class CardDisplay(tk.Frame):
         time = 'gold'
         neutral = 'gray18'
         multi = 'pink'
+        haven = "silver"
+        dragon = 'orange'
 
         for card in self.mydeck.deck[self.disp_type]:
             influence_list = ''
@@ -537,6 +539,6 @@ def main(decklist, card_db):
 
 
 if __name__ == "__main__":
-    DECKLIST = 'deck.csv'
-    CARD_DB = 'eternal-cards-1.31.json'
+    DECKLIST = 'deck.py'
+    CARD_DB = 'card_database.db'
     main(DECKLIST, CARD_DB)
