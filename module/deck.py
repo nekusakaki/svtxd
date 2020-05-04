@@ -12,7 +12,7 @@ class Deck:
         self._clan = clan
         self._stats = MatchStatistics(0, 0)
         self._history = MatchHistory()
-        self._cards = []
+        self._cards = {}
         self._card_counts = {}
         self._card_breakdown = {}
         self._cost_breakdown = {}
@@ -59,7 +59,8 @@ class Deck:
     def _generate_cards(self):
         self._cards.clear()
         for card_id in self._card_ids:
-            self._cards.append(Card(card_id))
+            if card_id not in self._cards.keys():
+                self._cards[card_id] = Card(card_id)
 
     def _generate_card_counts(self):
         self._card_counts.clear()
@@ -91,8 +92,8 @@ class Deck:
 
     def vials(self):
         total_vials = 0
-        for card in self.cards():
-            total_vials += card.vials
+        for card_id in self.cards():
+            total_vials += self.cards()[card_id].vials * self.card_counts()[card_id]
 
         return total_vials
 
@@ -148,7 +149,8 @@ class Deck:
 
             card_types = {'Follower': 0, 'Amulet': 1, 'Spell': 2}
 
-            for card in self.cards():
+            for card_id in self._card_ids:
+                card = self.cards()[card_id]
                 if card.cost < 8:
                     cost_breakdown[card.cost][card_types[card.get_card_type()]] += 1
                 else:
