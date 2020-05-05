@@ -4,6 +4,7 @@ import json
 from urllib.request import urlopen
 from card import Card
 import pickle
+import uuid
 
 
 class Deck:
@@ -17,6 +18,7 @@ class Deck:
         self._card_breakdown = {}
         self._cost_breakdown = {}
         self.name = name
+        self.uuid = uuid.uuid4().hex
 
     @staticmethod
     def generate_from_deck_code(name, deck_code):
@@ -48,7 +50,7 @@ class Deck:
 
     def save_to_file(self, file_path):
         self._cards.clear()
-        file_name = self.name.replace(' ', '_')
+        file_name = str(self.uuid)
         full_path = file_path + file_name + '.dck'
         with open(full_path, 'wb') as output_file:
             pickle.dump(self, output_file, pickle.HIGHEST_PROTOCOL)
@@ -112,6 +114,12 @@ class Deck:
 
     def win_rate(self):
         return self._stats.win_percentage() * 100.0
+
+    def wins(self):
+        return self._stats.wins
+
+    def losses(self):
+        return self._stats.losses
 
     def increment_wins(self, clan, duration):
         self._stats.increment_wins()

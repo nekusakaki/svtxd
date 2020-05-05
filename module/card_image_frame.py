@@ -4,15 +4,19 @@ from PIL import ImageTk, Image
 
 
 class CardImageFrame:
+    START_SCALE = 1
+
     def __init__(self, parent, card, count):
         image_db = ImageDatabaseInterface()
         self.card_img = Image.open(image_db.get_card_image(card.card_id))
-        img_copy = self.card_img.resize((int(self.card_img.width*0.5), int(self.card_img.height*0.5)))
+        img_copy = self.card_img.resize((int(self.card_img.width*self.START_SCALE),
+                                         int(self.card_img.height*self.START_SCALE)))
         self.tk_img = ImageTk.PhotoImage(img_copy)
 
         self.card_name = card.card_name
         self.cost = card.cost
         self.count = count
+        self.card_clan = card.clan
 
         self.frame = self._generate_frame(parent)
         self.canvas = self._generate_canvas(self.frame)

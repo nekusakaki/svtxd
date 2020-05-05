@@ -5,49 +5,86 @@ from card_image_frame import CardImageFrame
 
 class DecklistFrame:
     def __init__(self, parent, decklist):
-        self._decklist = decklist
-        self._frame = Frame(parent, height=500, padx=5, pady=5)
-        self.deck_name_label = Label(self._frame, text=self._decklist.name, bg="black", fg="white")
-        self.cards_canvas = Canvas(self._frame)
-        self.cost_breakdown_frame = CostBreakdownFrame(self._frame, decklist)
+        self.decklist = decklist
+        self.height = 500
+        self.frame = Frame(parent, height=self.height, padx=5, pady=5)
+        self.deck_name_label = self._generate_deck_name_label(self.frame)
+        self.cards_canvas = Canvas(self.frame, width=300)
+        self.cards_frame = Frame(self.cards_canvas, height=1000, bd=0, borderwidth=0)
+        self.vbar = Scrollbar(self.frame, orient=VERTICAL)
+        self.cost_breakdown_frame = CostBreakdownFrame(self.frame, decklist)
         self.cards = {}
 
         self._fill_cards_canvas()
         self._adjust_widgets()
 
-        self.width = 450
+    def _generate_deck_name_label(self, parent):
+        label = Label(parent, text=self.decklist.name, bg="black", fg="white")
+        return label
 
     def _fill_cards_canvas(self):
-        card_counts = self._decklist.card_counts()
-        cards = self._decklist.cards()
+        card_counts = self.decklist.card_counts()
+        cards = self.decklist.cards()
 
         for index, card_id in enumerate(card_counts):
-            card = CardImageFrame(self.cards_canvas, cards[card_id], card_counts[card_id])
+            card = CardImageFrame(self.cards_frame, cards[card_id], card_counts[card_id])
             card.frame.grid(row=index, column=0, sticky=W+E)
             self.cards[card_id] = card
 
     def _adjust_widgets(self):
-        self.deck_name_label.grid(row=0, column=0, sticky=W+E+N+S)
-        self.cards_canvas.grid(row=1, column=0, sticky=W+E+N+S)
-        self.cards_canvas.columnconfigure(0, weight=1)
+        self.deck_name_label.grid(row=0, column=0, columnspan=2, sticky=W+E+N+S)
+
+        self.vbar.grid(row=1, column=1, sticky=N+S, pady=5)
+        self.vbar.configure(command=self.cards_canvas.yview)
+
+        self.cards_canvas.grid(row=1, column=0, sticky=W+E+N+S, pady=5)
+        self.cards_canvas.create_window((0, 0), window=self.cards_frame, anchor=N+W)
+        self.cards_canvas.configure(yscrollcommand=self.vbar.set)
+        self.cards_canvas.bind('<Enter>', self.bind_mousewheel)
+        self.cards_canvas.bind('<Leave>', self.unbind_mousewheel)
         self.cards_canvas.bind('<Configure>', self.resize)
-        self.cost_breakdown_frame.frame.grid(row=2, column=0, sticky=W+E+N+S)
-        self._frame.columnconfigure(0, weight=1)
+
+        self.cost_breakdown_frame.frame.grid(row=2, column=0, columnspan=2, sticky=W+E+N+S)
+
+        self.frame.columnconfigure(0, weight=1)
+
+    def bind_mousewheel(self, event):
+        self.cards_canvas.bind_all('<MouseWheel>', self.on_mousewheel)
+
+    def unbind_mousewheel(self, event):
+        self.cards_canvas.unbind_all('<MouseWheel>')
+
+    def on_mousewheel(self, event):
+        self.cards_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
 
     def resize(self, event):
-        scale = event.width / 367
-        self.resize_cards_canvas(scale)
+        scale = event.width / 385
         self.resize_card_images(scale)
+        self.resize_deck_name(scale)
+        self.cards_frame.configure(width=event.width, height=self.cards_frame.winfo_reqheight())
+        canvas_height = self.height - \
+                        (self.deck_name_label.winfo_height() + self.cost_breakdown_frame.frame.winfo_height()) - \
+                        24
+        self.cards_canvas.configure(height=canvas_height)
+        self.resize_cards_canvas(scale)
+
+    def resize_cards_frame(self, scale):
+        new_width = int(self.cards_frame.winfo_reqwidth() * scale)
+        self.cards_frame.configure(width=new_width)
 
     def resize_cards_canvas(self, scale):
-        new_width = int(self.cards_canvas.winfo_width() * scale)
-        self.cards_canvas.configure(width=new_width)
+        self.cards_canvas.configure(scrollregion=self.cards_canvas.bbox('all'))
 
     def resize_card_images(self, scale):
         for card_id in self.cards:
             self.cards[card_id].resize(scale)
 
-    def frame(self):
-        return self._frame
+    def resize_deck_name(self, scale):
+        new_height = int(4 * scale)
+        self.deck_name_label.configure(height=new_height)
 
+    def delete(self):
+        for child in self.frame.winfo_children():
+            child.destroy()
 
+        self.frame.destroy()
