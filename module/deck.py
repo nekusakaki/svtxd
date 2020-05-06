@@ -131,6 +131,9 @@ class Deck:
         self._stats.increment_clan_losses(clan)
         self._history.add_match(clan, False, duration)
 
+    def wins_breakdown(self):
+        return self._stats.clan_wins
+
     def clan_wins(self, clan):
         return self._stats.clan_wins[clan - 1]
 

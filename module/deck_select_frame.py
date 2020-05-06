@@ -1,8 +1,10 @@
 from tkinter import *
-from tkinter import messagebox
+from tkinter import ttk
 from deck import Deck
 from decklist_frame import DecklistFrame
 from deck_preview_frame import DeckPreviewFrame
+from add_deck_frame import AddDeckFrame
+from stats_frame import StatsFrame
 import os
 
 
@@ -24,7 +26,11 @@ class DeckSelectFrame:
 
         self.add_popup = None
 
-        self.decklist_frame = None
+        self.deck_notebook = ttk.Notebook(self.frame)
+        self.tab_frame_0 = Frame(self.deck_notebook, width=320, height=500)
+        self.tab_frame_1 = Frame(self.deck_notebook, width=320, height=500)
+        self.decklist_frame = Frame(self.tab_frame_0, width=320, height=500)
+        self.stats_frame = Frame(self.tab_frame_0, width=320, height=500)
 
         self.fill_sort_buttons_frame()
         self.generate_deck_previews()
@@ -110,6 +116,13 @@ class DeckSelectFrame:
             child.grid_forget()
         self.fill_decks_frame()
 
+        bbox = self.decks_canvas.bbox('all')
+
+        if bbox is None:
+            self.decks_canvas.configure(scrollregion=(0, 0, 0, 0))
+        else:
+            self.decks_canvas.configure(scrollregion=bbox)
+
     def decks_frame_resize(self, event):
         self.decks_canvas.configure(scrollregion=self.decks_canvas.bbox('all'))
 
@@ -125,18 +138,26 @@ class DeckSelectFrame:
             deck_preview.frame.grid(row=index, column=0, sticky=W+E)
 
     def view_deck(self, deck):
+        if self.current_deck:
+            for child in self.tab_frame_0.winfo_children():
+                child.destroy()
+            for child in self.tab_frame_1.winfo_children():
+                child.destroy()
+
         self.current_deck = deck
         self.preview_deck()
+        self.preview_stats()
 
     def preview_deck(self):
-        if self.decklist_frame:
-            self.decklist_frame.delete()
+        self.decklist_frame = DecklistFrame(self.tab_frame_0, self.current_deck)
+        self.decklist_frame.frame.grid(row=0, column=0, sticky=N+E+W+S)
 
-        self.decklist_frame = DecklistFrame(self.frame, self.current_deck)
-        self.decklist_frame.frame.grid(row=2, column=2, sticky=N+E+W+S)
+    def preview_stats(self):
+        self.stats_frame = StatsFrame(self.tab_frame_1, self.current_deck)
+        self.stats_frame.frame.grid(row=0, column=0, sticky=N+E+W+S)
 
     def adjust_widgets(self):
-        self.add_deck_button.grid(row=0, column=0, columnspan=2)
+        self.add_deck_button.grid(row=0, column=0, columnspan=2, sticky=W)
 
         self.sort_buttons_frame.grid(row=1, column=0, columnspan=2, sticky=N+E+W+S)
 
@@ -149,46 +170,17 @@ class DeckSelectFrame:
         self.vbar.grid(row=2, column=1, sticky=N+S)
         self.vbar.configure(command=self.decks_canvas.yview)
 
+        self.deck_notebook.grid(row=1, column=2, rowspan=2, sticky=N+E+W+S)
+        self.tab_frame_0.pack(fill=BOTH, expand=True)
+        self.tab_frame_1.pack(fill=BOTH, expand=True)
 
-class AddDeckFrame:
-    def __init__(self, master, function):
-        self.add_deck_function = function
+        self.decklist_frame.grid(row=0, column=0, sticky=N+E+W+S)
 
-        self.frame = Frame(master)
-        self.deck_name_label = Label(self.frame, text="Deck Name: ")
-        self.deck_name_entry = Entry(self.frame, width=30)
-        self.deck_code_label = Label(self.frame, text="Deck Code: ")
-        self.deck_code_entry = Entry(self.frame, width=4)
-        self.enter_button = Button(self.frame, text='Enter', command=self.add_deck)
+        self.stats_frame.grid(row=0, column=0, sticky=N+E+W+S)
 
-        self.adjust_widgets()
+        self.deck_notebook.add(self.tab_frame_0, text='Decklist')
+        self.deck_notebook.add(self.tab_frame_1, text='Match Statistics')
 
-    def add_deck(self):
-        deck_name = self.deck_name_entry.get()
-        deck_code = self.deck_code_entry.get()
-
-        if not deck_name:
-            messagebox.showinfo("Error", "Invalid deck name.")
-            return
-
-        if not len(deck_code) == 4:
-            messagebox.showinfo("Error", "Invalid deck code.")
-            return
-
-        deck = Deck.generate_from_deck_code(deck_name, deck_code)
-        if not deck:
-            messagebox.showinfo("Error", "Invalid or expired deck code.")
-            return
-
-        self.add_deck_function(deck)
-
-    def adjust_widgets(self):
-        self.deck_name_label.grid(row=0, column=0)
-
-        self.deck_name_entry.grid(row=0, column=1)
-
-        self.deck_code_label.grid(row=1, column=0)
-
-        self.deck_code_entry.grid(row=1, column=1)
-
-        self.enter_button.grid(row=2, column=0, columnspan=2)
+        self.frame.rowconfigure(0, weight=0)
+        self.frame.rowconfigure(1, weight=0)
+        self.frame.rowconfigure(2, weight=1)

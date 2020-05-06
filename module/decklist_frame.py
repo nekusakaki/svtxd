@@ -15,14 +15,14 @@ class DecklistFrame:
         self.cost_breakdown_frame = CostBreakdownFrame(self.frame, decklist)
         self.cards = {}
 
-        self._fill_cards_canvas()
+        self._fill_cards_frame()
         self._adjust_widgets()
 
     def _generate_deck_name_label(self, parent):
         label = Label(parent, text=self.decklist.name, bg="black", fg="white")
         return label
 
-    def _fill_cards_canvas(self):
+    def _fill_cards_frame(self):
         card_counts = self.decklist.card_counts()
         cards = self.decklist.cards()
 
@@ -34,7 +34,7 @@ class DecklistFrame:
     def _adjust_widgets(self):
         self.deck_name_label.grid(row=0, column=0, columnspan=2, sticky=W+E+N+S)
 
-        self.vbar.grid(row=1, column=1, sticky=N+S, pady=5)
+        self.vbar.grid(row=1, column=1, sticky=N+S)
         self.vbar.configure(command=self.cards_canvas.yview)
 
         self.cards_canvas.grid(row=1, column=0, sticky=W+E+N+S, pady=5)
