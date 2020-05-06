@@ -11,14 +11,14 @@ class Deck:
     def __init__(self, name, card_ids, clan):
         self._card_ids = card_ids
         self._clan = clan
-        self._stats = MatchStatistics(0, 0)
+        self._stats = MatchStatistics()
         self._history = MatchHistory()
         self._cards = {}
         self._card_counts = {}
         self._card_breakdown = {}
         self._cost_breakdown = {}
         self.name = name
-        self.uuid = uuid.uuid4().hex
+        self.uuid = str(uuid.uuid4().hex)[:4]
 
     @staticmethod
     def generate_from_deck_code(name, deck_code):
@@ -50,7 +50,7 @@ class Deck:
 
     def save_to_file(self, file_path):
         self._cards.clear()
-        file_name = str(self.uuid)
+        file_name = self.name.replace(' ', '_') + '_' + self.uuid
         full_path = file_path + file_name + '.dck'
         with open(full_path, 'wb') as output_file:
             pickle.dump(self, output_file, pickle.HIGHEST_PROTOCOL)
@@ -122,12 +122,12 @@ class Deck:
         return self._stats.losses
 
     def increment_wins(self, clan, first, duration):
-        self._stats.increment_wins()
+        self._stats.increment_wins(first)
         self._stats.increment_clan_wins(clan)
         self._history.add_match(clan, first, True, duration)
 
     def increment_losses(self, clan, first, duration):
-        self._stats.increment_losses()
+        self._stats.increment_losses(first)
         self._stats.increment_clan_losses(clan)
         self._history.add_match(clan, first, False, duration)
 
@@ -137,8 +137,17 @@ class Deck:
     def clan_wins(self, clan):
         return self._stats.clan_wins[clan - 1]
 
+    def losses_breakdown(self):
+        return self._stats.clan_losses
+
     def clan_losses(self, clan):
         return self._stats.clan_losses[clan - 1]
+
+    def first_breakdown(self):
+        return [self._stats.first_wins, self._stats.first_losses]
+
+    def second_breakdown(self):
+        return [self._stats.second_wins, self._stats.second_losses]
 
     def get_matches(self):
         return self._history.get_matches()

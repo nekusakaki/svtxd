@@ -11,7 +11,7 @@ class AddDeckFrame:
         self.deck_name_label = Label(self.frame, text="Deck Name: ")
         self.deck_name_entry = Entry(self.frame, width=30)
         self.deck_code_label = Label(self.frame, text="Deck Code: ")
-        self.deck_code_entry = Entry(self.frame, width=4)
+        self.deck_code_entry = Entry(self.frame, width=5)
         self.enter_button = Button(self.frame, text='Enter', command=self.add_deck)
 
         self.adjust_widgets()

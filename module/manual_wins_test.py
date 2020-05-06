@@ -2,7 +2,7 @@ from deck import Deck
 from random import random
 
 
-deck = Deck.generate_from_file('../decks/d8d4f8487d634629aea2da2800e8c5e3.dck')
+deck = Deck.generate_from_file('../decks/Control_Forest_76f7.dck')
 
 for i in range(1, 9):
     for j in range(5):

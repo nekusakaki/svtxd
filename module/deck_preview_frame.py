@@ -21,7 +21,8 @@ class DeckPreviewFrame:
         if self.deck.wins() + self.deck.losses() == 0:
             text = "No Stats"
         else:
-            text = str(self.deck.win_rate()) + ' | ' + str(self.deck.wins()) + '-' + str(self.deck.losses())
+            win_rate = '{:.2f}'.format(self.deck.win_rate())
+            text = win_rate + ' | ' + str(self.deck.wins()) + '-' + str(self.deck.losses())
         label = Label(master, text=text, anchor=W)
         return label
 
