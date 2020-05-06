@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+from deck import Deck
 
 
 class AddDeckFrame:

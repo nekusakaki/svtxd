@@ -121,15 +121,15 @@ class Deck:
     def losses(self):
         return self._stats.losses
 
-    def increment_wins(self, clan, duration):
+    def increment_wins(self, clan, first, duration):
         self._stats.increment_wins()
         self._stats.increment_clan_wins(clan)
-        self._history.add_match(clan, True, duration)
+        self._history.add_match(clan, first, True, duration)
 
-    def increment_losses(self, clan, duration):
+    def increment_losses(self, clan, first, duration):
         self._stats.increment_losses()
         self._stats.increment_clan_losses(clan)
-        self._history.add_match(clan, False, duration)
+        self._history.add_match(clan, first, False, duration)
 
     def wins_breakdown(self):
         return self._stats.clan_wins
