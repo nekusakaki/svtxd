@@ -35,8 +35,8 @@ class StatsFrame:
         self.match_history_frame.frame.grid(row=2, column=0, sticky=N+E+W+S, pady=5)
 
         self.figures_notebook.grid(row=1, column=0, sticky=E+W, pady=5)
-        self.figures_notebook.add(self.wins_breakdown_frame.frame, text='Wins Breakdown')
-        self.figures_notebook.add(self.losses_breakdown_frame.frame, text='Losses Breakdown')
-        self.figures_notebook.add(self.first_breakdown_frame.frame, text='Going First')
-        self.figures_notebook.add(self.second_breakdown_frame.frame, text='Going Second')
+        self.figures_notebook.add(self.wins_breakdown_frame.frame, text='Wins')
+        self.figures_notebook.add(self.losses_breakdown_frame.frame, text='Losses')
+        self.figures_notebook.add(self.first_breakdown_frame.frame, text='First')
+        self.figures_notebook.add(self.second_breakdown_frame.frame, text='Second')
 

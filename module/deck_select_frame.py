@@ -164,6 +164,8 @@ class DeckSelectFrame:
         self.decks_canvas.grid(row=2, column=0, sticky=N+E+W+S)
         self.decks_canvas.configure(yscrollcommand=self.vbar.set)
         self.decks_canvas.create_window((0, 0), window=self.decks_frame, anchor=N+W)
+        self.decks_canvas.bind('<Enter>', self.bind_mousewheel)
+        self.decks_canvas.bind('<Leave>', self.unbind_mousewheel)
 
         self.decks_frame.bind('<Configure>', self.decks_frame_resize)
 
@@ -184,3 +186,12 @@ class DeckSelectFrame:
         self.frame.rowconfigure(0, weight=0)
         self.frame.rowconfigure(1, weight=0)
         self.frame.rowconfigure(2, weight=1)
+
+    def bind_mousewheel(self, event):
+        self.decks_canvas.bind_all('<MouseWheel>', self.on_mousewheel)
+
+    def unbind_mousewheel(self, event):
+        self.decks_canvas.unbind_all('<MouseWheel>')
+
+    def on_mousewheel(self, event):
+        self.decks_canvas.yview_scroll(int(-1*(event.delta/120)), "units")

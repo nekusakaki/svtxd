@@ -29,8 +29,19 @@ class MatchHistoryFrame:
         self.canvas.grid(row=0, column=0, sticky=N+E+W+S)
         self.canvas.create_window((0, 0), window=self.matches_frame, anchor=N+W)
         self.canvas.configure(yscrollcommand=self.vbar.set)
+        self.canvas.bind('<Enter>', self.bind_mousewheel)
+        self.canvas.bind('<Leave>', self.unbind_mousewheel)
 
         self.frame.bind('<Configure>', self.resize)
 
     def resize(self, event):
         self.canvas.configure(scrollregion=self.canvas.bbox('all'))
+
+    def bind_mousewheel(self, event):
+        self.canvas.bind_all('<MouseWheel>', self.on_mousewheel)
+
+    def unbind_mousewheel(self, event):
+        self.canvas.unbind_all('<MouseWheel>')
+
+    def on_mousewheel(self, event):
+        self.canvas.yview_scroll(int(-1*(event.delta/120)), "units")
