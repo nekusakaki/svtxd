@@ -1,5 +1,5 @@
 from tkinter import *
-from deck_select_frame import DeckSelectFrame
+from main_frame import MainFrame
 import matplotlib
 
 
@@ -8,9 +8,9 @@ matplotlib.use("Agg")
 root = Tk()
 root.title("SV Deck Tracker XD")
 
-deck_select_frame = DeckSelectFrame(root)
+main_frame = MainFrame(root)
 
-deck_select_frame.frame.pack()
+main_frame.frame.pack()
 
 root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)

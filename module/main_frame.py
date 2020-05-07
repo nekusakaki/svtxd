@@ -10,7 +10,7 @@ from deck_tracker_frame import DeckTrackerFrame
 import os
 
 
-class DeckSelectFrame:
+class MainFrame:
     def __init__(self, master):
         self.decks = self.load_decks('../decks/')
         self.decks_sorted = self.sort_decks()
