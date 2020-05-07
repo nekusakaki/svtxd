@@ -27,7 +27,7 @@ class MatchHistoryFrame:
         self.vbar.configure(command=self.canvas.yview)
 
         self.canvas.grid(row=0, column=0, sticky=N+E+W+S)
-        self.canvas.create_window((0, 0), window=self.matches_frame, anchor=N+W)
+        self.canvas.create_window((0, 0), window=self.matches_frame, anchor=N)
         self.canvas.configure(yscrollcommand=self.vbar.set)
         self.canvas.bind('<Enter>', self.bind_mousewheel)
         self.canvas.bind('<Leave>', self.unbind_mousewheel)

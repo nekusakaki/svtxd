@@ -1,6 +1,8 @@
 from tkinter import *
 from cost_breakdown_frame import CostBreakdownFrame
 from card_image_frame import CardImageFrame
+from class_icons import ClassIcons
+from PIL import ImageTk
 
 
 class DecklistFrame:
@@ -8,7 +10,10 @@ class DecklistFrame:
         self.decklist = decklist
         self.height = 500
         self.frame = Frame(parent, height=self.height, padx=5, pady=5)
+
+        self.tk_image = ImageTk.PhotoImage(ClassIcons().get_icon(self.decklist.clan()))
         self.deck_name_label = self._generate_deck_name_label(self.frame)
+
         self.cards_canvas = Canvas(self.frame, width=300)
         self.cards_frame = Frame(self.cards_canvas, height=1000, bd=0, borderwidth=0)
         self.vbar = Scrollbar(self.frame, orient=VERTICAL)
@@ -19,7 +24,8 @@ class DecklistFrame:
         self._adjust_widgets()
 
     def _generate_deck_name_label(self, parent):
-        label = Label(parent, text=self.decklist.name, bg="black", fg="white")
+        label = Label(parent, image=self.tk_image, text=self.decklist.name, bg="black", fg="white",
+                      compound=RIGHT, anchor=E, font="Sans 12 bold")
         return label
 
     def _fill_cards_frame(self):
@@ -60,7 +66,7 @@ class DecklistFrame:
     def resize(self, event):
         scale = event.width / 385
         self.resize_card_images(scale)
-        self.resize_deck_name(scale)
+        # self.resize_deck_name(scale)
         self.cards_frame.configure(width=event.width, height=self.cards_frame.winfo_reqheight())
         canvas_height = self.height - \
                         (self.deck_name_label.winfo_height() + self.cost_breakdown_frame.frame.winfo_height()) - \

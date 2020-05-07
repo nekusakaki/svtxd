@@ -1,10 +1,12 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 from deck import Deck
 from decklist_frame import DecklistFrame
 from deck_preview_frame import DeckPreviewFrame
 from add_deck_frame import AddDeckFrame
 from stats_frame import StatsFrame
+from deck_tracker_frame import DeckTrackerFrame
 import os
 
 
@@ -18,13 +20,17 @@ class DeckSelectFrame:
         self.current_deck = None
 
         self.frame = Frame(master, width=300, height=300)
-        self.add_deck_button = Button(self.frame, text="ADD DECK", command=self.add_deck_popup)
+        self.add_deck_button = ttk.Button(self.frame, text="ADD DECK", command=self.add_deck_popup)
         self.sort_buttons_frame = Frame(self.frame)
-        self.decks_canvas = Canvas(self.frame, width=300, scrollregion=(0, 0, 300, 500))
+        self.decks_canvas = Canvas(self.frame, width=300, scrollregion=(0, 0, 300, 500), highlightthickness=0)
         self.decks_frame = Frame(self.decks_canvas, height=500, bd=0, borderwidth=0)
-        self.vbar = Scrollbar(self.frame, orient=VERTICAL)
+        self.vbar = ttk.Scrollbar(self.frame, orient=VERTICAL)
 
         self.add_popup = None
+
+        self.start_button = ttk.Button(self.frame, text="START DECK TRACKER", command=self.start)
+        self.deck_tracker = None
+        self.deck_tracker_frame = None
 
         self.deck_notebook = ttk.Notebook(self.frame)
         self.tab_frame_0 = Frame(self.deck_notebook, width=320, height=500)
@@ -36,6 +42,35 @@ class DeckSelectFrame:
         self.generate_deck_previews()
         self.fill_decks_frame()
         self.adjust_widgets()
+
+    def start(self):
+        if self.current_deck is None:
+            messagebox.showinfo('Error', 'Please choose a deck.')
+            return
+
+        if self.deck_tracker and self.deck_tracker.winfo_exists() \
+                and self.deck_tracker_frame.deck is self.current_deck:
+            return
+
+        if self.deck_tracker and self.deck_tracker.winfo_exists() \
+                and self.deck_tracker_frame.deck is not self.current_deck:
+            switch_decks = messagebox.askyesno('Warning', 'Switch decks?')
+            if switch_decks:
+                self.deck_tracker.destroy()
+                self.deck_tracker = None
+            else:
+                return
+
+        self.deck_tracker = Toplevel()
+        self.deck_tracker.title(self.current_deck.name)
+        self.deck_tracker.resizable(True, False)
+        self.deck_tracker.transient(self.frame)
+        self.deck_tracker.attributes('-topmost', 'true')
+
+        self.deck_tracker_frame = DeckTrackerFrame(self.deck_tracker, self.current_deck)
+        self.deck_tracker_frame.frame.pack(fill=BOTH, expand=TRUE)
+        self.deck_tracker_frame.frame.bind('<Configure>', self.deck_tracker_frame.resize)
+
 
     def add_deck_popup(self):
         if self.add_popup:
@@ -80,29 +115,24 @@ class DeckSelectFrame:
         return decks_sorted
 
     def fill_sort_buttons_frame(self):
-        # clans = ['All', 'Forest', 'Sword', 'Rune', 'Dragon', 'Shadow', 'Blood', 'Haven', 'Portal']
-        #
-        # for clan in clans:
-        #     button = Button(self.sort_buttons_frame, text=clan, command=lambda: self.show_clan_decks(clan))
-        #     button.pack(side=LEFT)
-        button = Button(self.sort_buttons_frame, text='All', command=lambda: self.show_clan_decks('All'))
-        button.pack(side=LEFT)
-        button1 = Button(self.sort_buttons_frame, text='Forest', command=lambda: self.show_clan_decks('Forest'))
-        button1.pack(side=LEFT)
-        button2 = Button(self.sort_buttons_frame, text='Sword', command=lambda: self.show_clan_decks('Sword'))
-        button2.pack(side=LEFT)
-        button3 = Button(self.sort_buttons_frame, text='Rune', command=lambda: self.show_clan_decks('Rune'))
-        button3.pack(side=LEFT)
-        button4 = Button(self.sort_buttons_frame, text='Dragon', command=lambda: self.show_clan_decks('Dragon'))
-        button4.pack(side=LEFT)
-        button5 = Button(self.sort_buttons_frame, text='Shadow', command=lambda: self.show_clan_decks('Shadow'))
-        button5.pack(side=LEFT)
-        button6 = Button(self.sort_buttons_frame, text='Blood', command=lambda: self.show_clan_decks('Blood'))
-        button6.pack(side=LEFT)
-        button7 = Button(self.sort_buttons_frame, text='Haven', command=lambda: self.show_clan_decks('Haven'))
-        button7.pack(side=LEFT)
-        button8 = Button(self.sort_buttons_frame, text='Portal', command=lambda: self.show_clan_decks('Portal'))
-        button8.pack(side=LEFT)
+        button = ttk.Button(self.sort_buttons_frame, text='All', command=lambda: self.show_clan_decks('All'))
+        button.grid(row=0, column=0)
+        button1 = ttk.Button(self.sort_buttons_frame, text='Forest', command=lambda: self.show_clan_decks('Forest'))
+        button1.grid(row=0, column=1)
+        button2 = ttk.Button(self.sort_buttons_frame, text='Sword', command=lambda: self.show_clan_decks('Sword'))
+        button2.grid(row=0, column=2)
+        button3 = ttk.Button(self.sort_buttons_frame, text='Rune', command=lambda: self.show_clan_decks('Rune'))
+        button3.grid(row=0, column=3)
+        button4 = ttk.Button(self.sort_buttons_frame, text='Dragon', command=lambda: self.show_clan_decks('Dragon'))
+        button4.grid(row=0, column=4)
+        button5 = ttk.Button(self.sort_buttons_frame, text='Shadow', command=lambda: self.show_clan_decks('Shadow'))
+        button5.grid(row=1, column=0)
+        button6 = ttk.Button(self.sort_buttons_frame, text='Blood', command=lambda: self.show_clan_decks('Blood'))
+        button6.grid(row=1, column=1)
+        button7 = ttk.Button(self.sort_buttons_frame, text='Haven', command=lambda: self.show_clan_decks('Haven'))
+        button7.grid(row=1, column=2)
+        button8 = ttk.Button(self.sort_buttons_frame, text='Portal', command=lambda: self.show_clan_decks('Portal'))
+        button8.grid(row=1, column=3)
 
     def show_clan_decks(self, clan):
         if clan == 'All':
@@ -113,7 +143,7 @@ class DeckSelectFrame:
         self.current_clan = clan
 
         for child in self.decks_frame.winfo_children():
-            child.grid_forget()
+            child.pack_forget()
         self.fill_decks_frame()
 
         bbox = self.decks_canvas.bbox('all')
@@ -133,11 +163,14 @@ class DeckSelectFrame:
             self.deck_previews[deck] = DeckPreviewFrame(self.decks_frame, deck, self.view_deck)
 
     def fill_decks_frame(self):
-        for index, deck in enumerate(self.displayed_decks):
+        for deck in self.displayed_decks:
             deck_preview = self.deck_previews[deck]
-            deck_preview.frame.grid(row=index, column=0, sticky=W+E)
+            deck_preview.frame.pack(side=TOP, fill=X, expand=TRUE)
 
     def view_deck(self, deck):
+        if deck == self.current_deck:
+            return
+
         if self.current_deck:
             for child in self.tab_frame_0.winfo_children():
                 child.destroy()
@@ -157,7 +190,7 @@ class DeckSelectFrame:
         self.stats_frame.frame.grid(row=0, column=0, sticky=N+E+W+S)
 
     def adjust_widgets(self):
-        self.add_deck_button.grid(row=0, column=0, columnspan=2, sticky=W)
+        self.add_deck_button.grid(row=0, column=0, columnspan=2, sticky=W+E)
 
         self.sort_buttons_frame.grid(row=1, column=0, columnspan=2, sticky=N+E+W+S)
 
@@ -169,8 +202,10 @@ class DeckSelectFrame:
 
         self.decks_frame.bind('<Configure>', self.decks_frame_resize)
 
-        self.vbar.grid(row=2, column=1, sticky=N+S)
+        self.vbar.grid(row=2, column=1, sticky=N+S+E)
         self.vbar.configure(command=self.decks_canvas.yview)
+
+        self.start_button.grid(row=0, column=2, sticky=W+E)
 
         self.deck_notebook.grid(row=1, column=2, rowspan=2, sticky=N+E+W+S)
         self.tab_frame_0.pack(fill=BOTH, expand=True)

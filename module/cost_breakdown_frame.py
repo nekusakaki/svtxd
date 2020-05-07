@@ -1,6 +1,7 @@
 from tkinter import *
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import helper_functions as hf
 
 
 class CostBreakdownFrame:
@@ -35,10 +36,11 @@ class CostBreakdownFrame:
         ax.spines["top"].set_visible(False)
         ax.spines["left"].set_visible(False)
         ax.spines["right"].set_visible(False)
-        ax.set_facecolor('lightgray')
+        background_color = hf.rgb_to_hex(self.frame.winfo_rgb(self.frame['bg']))
+        ax.set_facecolor(background_color)
         ax.set_title('Cost Breakdown')
 
-        fig.patch.set_facecolor('lightgray')
+        fig.patch.set_facecolor(background_color)
 
         cost_chart = FigureCanvasTkAgg(fig, self.frame)
         cost_chart.get_tk_widget().pack(fill=BOTH)
@@ -46,3 +48,4 @@ class CostBreakdownFrame:
 
     def resize(self, event):
         self.frame.configure(width=event.width, height=event.width)
+

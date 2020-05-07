@@ -4,7 +4,7 @@ from PIL import ImageTk, Image
 
 
 class CardImageFrame:
-    START_SCALE = 1
+    START_SCALE = 0.65
 
     def __init__(self, parent, card, count):
         image_db = ImageDatabaseInterface()
@@ -38,8 +38,21 @@ class CardImageFrame:
     def _generate_cost_frame(self, parent):
         height = self.tk_img.height()
         width = height
-        frame = Frame(parent, width=width, height=height, bg="gray", bd=0)
-        label = Label(frame, bg=frame['bg'], text=self.cost, bd=0)
+
+        class_color = {
+            0: 'gray',
+            1: 'green',
+            2: 'yellow',
+            3: 'blue',
+            4: 'orange',
+            5: 'purple',
+            6: 'red',
+            7: 'lightgray',
+            8: 'darkgray',
+        }
+
+        frame = Frame(parent, width=width, height=height, bg=class_color[self.card_clan], bd=0)
+        label = Label(frame, bg=frame['bg'], text=self.cost, bd=0, font="times 12 bold")
         label.place(relx=0.5, rely=0.5, x=0, y=0, anchor="center")
         return frame
 
@@ -47,7 +60,8 @@ class CardImageFrame:
         height = self.tk_img.height()
         width = height
         frame = Frame(parent, width=width, height=height, bg="black", bd=0)
-        label = Label(frame, bg=frame['bg'], text='x' + str(self.count), bd=0, fg="white")
+        label = Label(frame, bg=frame['bg'], text='x' + str(self.count), bd=0, fg="white",
+                      font="arial 10")
         label.place(relx=0.5, rely=0.5, x=0, y=0, anchor="center")
         return frame
 

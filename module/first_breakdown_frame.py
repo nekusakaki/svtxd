@@ -1,6 +1,7 @@
 from tkinter import *
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import helper_functions as hf
 
 
 class FirstBreakdownFrame:
@@ -12,7 +13,7 @@ class FirstBreakdownFrame:
 
     def generate_graph(self):
         if self.first_breakdown == [0, 0]:
-            first_chart = Label(self.frame, text="NO DATA")
+            first_chart = Label(self.frame, text="NO DATA", font='Times 36 bold')
             first_chart.pack(fill=BOTH, expand=TRUE)
             return first_chart
 
@@ -22,6 +23,9 @@ class FirstBreakdownFrame:
         legend = ['Wins', 'Losses']
         ax.pie(self.first_breakdown, labels=legend, autopct='%1.2f')
         ax.set_title('Going First Breakdown')
+
+        background = hf.rgb_to_hex(self.frame.winfo_rgb(self.frame['bg']))
+        fig.patch.set_facecolor(background)
 
         first_chart = FigureCanvasTkAgg(fig, self.frame)
         first_chart.get_tk_widget().pack(fill=BOTH)

@@ -1,6 +1,7 @@
 from tkinter import *
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import helper_functions as hf
 
 
 class WinsBreakdownFrame:
@@ -12,7 +13,7 @@ class WinsBreakdownFrame:
 
     def generate_graph(self):
         if self.wins_breakdown == [0, 0, 0, 0, 0, 0, 0, 0]:
-            wins_chart = Label(self.frame, text="NO DATA")
+            wins_chart = Label(self.frame, text="NO DATA", font='Times 36 bold')
             wins_chart.pack(fill=BOTH, expand=TRUE)
             return wins_chart
 
@@ -20,8 +21,12 @@ class WinsBreakdownFrame:
         ax = fig.subplots()
         ax.axis('equal')
         classes = ['Forest', 'Sword', 'Rune', 'Dragon', 'Shadow', 'Blood', 'Haven', 'Portal']
-        ax.pie(self.wins_breakdown, labels=classes, autopct='%1.2f')
+        total = sum(self.wins_breakdown)
+        ax.pie(self.wins_breakdown, labels=classes, autopct=lambda p: '{:.0f}'.format(p * total / 100))
         ax.set_title('Wins Breakdown By Class')
+
+        background = hf.rgb_to_hex(self.frame.winfo_rgb(self.frame['bg']))
+        fig.patch.set_facecolor(background)
 
         wins_chart = FigureCanvasTkAgg(fig, self.frame)
         wins_chart.get_tk_widget().pack(fill=BOTH)

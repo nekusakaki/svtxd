@@ -16,7 +16,7 @@ root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
 root.rowconfigure(0, weight=1)
 
-root.resizable(width=True, height=False)
+root.resizable(width=False, height=False)
 
 # root.geometry("")
 

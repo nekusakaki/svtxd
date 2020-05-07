@@ -1,18 +1,24 @@
 from tkinter import *
+from class_icons import ClassIcons
+from PIL import ImageTk
 
 
 class MatchFrame:
     def __init__(self, master, match):
         self.match = match
         self.frame = Frame(master, width=300, height=100, bd=1, relief=GROOVE)
+
+        self.clan_icon = None
+        self.tk_image = None
         self.clan_label = self.generate_clan_label()
-        self.first_label = Label(self.frame)
-        self.won_label = Label(self.frame)
+
+        self.first_label = Label(self.frame, width=8)
+        self.won_label = Label(self.frame, width=5)
 
         minutes = int(self.match['duration'] / 60)
         seconds = int(self.match['duration'] % 60)
         duration_text = str(minutes) + 'm ' + str(seconds) + 's'
-        self.duration_label = Label(self.frame, text=duration_text)
+        self.duration_label = Label(self.frame, text=duration_text, width=10)
 
         if self.match['first']:
             self.first_label.configure(text="FIRST")
@@ -28,16 +34,20 @@ class MatchFrame:
 
     def generate_clan_label(self):
         classes = {
-            1: 'Forest',
-            2: 'Sword',
-            3: 'Rune',
-            4: 'Dragon',
-            5: 'Shadow',
-            6: 'Blood',
-            7: 'Haven',
-            8: 'Portal'
+            1: 'forest',
+            2: 'sword',
+            3: 'rune',
+            4: 'dragon',
+            5: 'shadow',
+            6: 'blood',
+            7: 'haven',
+            8: 'portal'
         }
-        label = Label(self.frame, text=classes.get(self.match['class']))
+        self.clan_icon = ClassIcons().get_icon(classes.get(self.match['class']))
+        img_copy = self.clan_icon.resize((25, 25))
+        self.tk_image = ImageTk.PhotoImage(img_copy)
+
+        label = Label(self.frame, image=self.tk_image)
         return label
 
     def adjust_widgets(self):
