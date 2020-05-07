@@ -5,6 +5,9 @@ from tkinter import *
 t = 0
 
 
+
+
+
 def set_timer():
     global t
     t = t+int(e1.get())

@@ -50,6 +50,7 @@ class DeckSelectFrame:
 
         if self.deck_tracker and self.deck_tracker.winfo_exists() \
                 and self.deck_tracker_frame.deck is self.current_deck:
+            self.deck_tracker.focus_set()
             return
 
         if self.deck_tracker and self.deck_tracker.winfo_exists() \
@@ -64,13 +65,12 @@ class DeckSelectFrame:
         self.deck_tracker = Toplevel()
         self.deck_tracker.title(self.current_deck.name)
         self.deck_tracker.resizable(True, False)
-        self.deck_tracker.transient(self.frame)
         self.deck_tracker.attributes('-topmost', 'true')
+        self.deck_tracker.focus_set()
 
-        self.deck_tracker_frame = DeckTrackerFrame(self.deck_tracker, self.current_deck)
+        self.deck_tracker_frame = DeckTrackerFrame(self.deck_tracker, self.current_deck, self.refresh)
         self.deck_tracker_frame.frame.pack(fill=BOTH, expand=TRUE)
         self.deck_tracker_frame.frame.bind('<Configure>', self.deck_tracker_frame.resize)
-
 
     def add_deck_popup(self):
         if self.add_popup:
@@ -79,6 +79,7 @@ class DeckSelectFrame:
         self.add_popup = Toplevel()
         add_deck_frame = AddDeckFrame(self.add_popup, self.add_deck)
         add_deck_frame.frame.pack()
+        self.add_popup.focus_set()
 
     def add_deck(self, deck):
         deck.save_to_file('../decks/')
@@ -155,6 +156,18 @@ class DeckSelectFrame:
 
     def decks_frame_resize(self, event):
         self.decks_canvas.configure(scrollregion=self.decks_canvas.bbox('all'))
+
+    def refresh(self):
+        self.generate_deck_previews()
+
+        for child in self.decks_frame.winfo_children():
+            child.pack_forget()
+        self.fill_decks_frame()
+
+        deck = self.current_deck
+        self.current_deck = None
+        if deck is not None:
+            self.view_deck(deck)
 
     def generate_deck_previews(self):
         self.deck_previews.clear()
