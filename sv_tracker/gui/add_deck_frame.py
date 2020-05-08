@@ -31,13 +31,14 @@ class AddDeckFrame:
             self.return_focus()
             return
 
-        deck = Deck.generate_from_deck_code(deck_name, deck_code)
-        if not deck:
+        try:
+            deck = Deck.generate_from_deck_code(deck_name, deck_code)
+        except ValueError:
             messagebox.showinfo("Error", "Invalid or expired deck code.")
             self.return_focus()
             return
-
-        self.add_deck_function(deck)
+        else:
+            self.add_deck_function(deck)
 
     def return_focus(self):
         self.frame.master.lift()
