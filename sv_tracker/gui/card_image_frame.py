@@ -83,6 +83,8 @@ class CardImageFrame:
     def gray_out_image(self):
         if self.count == 0:
             self.img_copy = self.resized_img.copy().convert('LA')
+            gray = Image.new('LA', (self.img_copy.width, self.img_copy.height), '#666666')
+            self.img_copy = Image.blend(self.img_copy, gray, 0.5)
         else:
             self.img_copy = self.resized_img
 

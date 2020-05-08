@@ -16,7 +16,7 @@ class DeckPreviewFrame:
 
         self.frame = ttk.Frame(master)
         self.icon_label = Label(self.frame, image=self.tk_image)
-        self.deck_name_label = ttk.Label(self.frame, text=self.deck.name, width=22, anchor=W, font="8")
+        self.deck_name_label = ttk.Label(self.frame, text=self.deck.name, anchor=W, font="10")
         self.stats_label = self.generate_stats_label(self.frame)
         self.view_button = ttk.Button(self.frame, text='VIEW', command=self.view_deck)
 
