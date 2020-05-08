@@ -1,7 +1,7 @@
 import sqlite3
 import os
 
-database_path = 'card_image_database.db'
+database_path = 'database/card_image_database.db'
 
 if os.path.exists(database_path):
     try:
@@ -35,7 +35,7 @@ def insert_card_image(card_id_number, card_image):
                   })
 
 
-conn_card = sqlite3.connect('card_database.db')
+conn_card = sqlite3.connect('database/card_database.db')
 conn_card.row_factory = lambda cursor, row: row[0]
 c_card = conn_card.cursor()
 card_ids = c_card.execute('SELECT card_id FROM cards').fetchall()

@@ -1,11 +1,11 @@
 from tkinter import *
 from tkinter import ttk
-from card_image_frame import CardImageFrame
+from gui.card_image_frame import CardImageFrame
 from tracked_deck import TrackedDeck
-from turn_timer_frame import TurnTimerFrame
-from stop_watch_frame import StopwatchFrame
-from change_count_frame import ChangeCountFrame
-from log_match_frame import LogMatchFrame
+from gui.turn_timer_frame import TurnTimerFrame
+from gui.stop_watch_frame import StopwatchFrame
+from gui.change_count_frame import ChangeCountFrame
+from gui.log_match_frame import LogMatchFrame
 
 
 class DeckTrackerFrame:

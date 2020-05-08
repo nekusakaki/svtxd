@@ -7,7 +7,7 @@ def dl_card_jpg(url, file_path, file_name):
     urllib.request.urlretrieve(url, full_path)
 
 
-conn = sqlite3.connect('card_database.db')
+conn = sqlite3.connect('database/card_database.db')
 conn.row_factory = lambda cursor, row: row[0]
 c = conn.cursor()
 card_ids = c.execute('SELECT card_id FROM cards').fetchall()

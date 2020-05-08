@@ -1,5 +1,5 @@
 from tkinter import *
-from main_frame import MainFrame
+from gui.main_frame import MainFrame
 import matplotlib
 
 

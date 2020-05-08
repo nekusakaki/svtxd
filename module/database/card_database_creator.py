@@ -29,7 +29,7 @@ for card in cards:
     card['evo_description'] = replace_text(card['evo_description'])
 
 
-database_path = 'card_database.db'
+database_path = 'database/card_database.db'
 
 if os.path.exists(database_path):
     try:

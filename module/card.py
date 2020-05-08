@@ -1,4 +1,4 @@
-from database_interface import DatabaseInterface
+from database.database_interface import DatabaseInterface
 
 
 class Card:

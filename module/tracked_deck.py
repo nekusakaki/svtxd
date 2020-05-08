@@ -2,7 +2,7 @@ class TrackedDeck:
     def __init__(self, deck):
         self._deck = deck
         self._card_list = deck.card_list()
-        self._current_card_counts = deck.card_counts()
+        self._current_card_counts = deck.card_counts().copy()
 
         self._cards_left = self._deck.total_cards()
 

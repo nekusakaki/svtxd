@@ -2,11 +2,11 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 from deck import Deck
-from decklist_frame import DecklistFrame
-from deck_preview_frame import DeckPreviewFrame
-from add_deck_frame import AddDeckFrame
-from stats_frame import StatsFrame
-from deck_tracker_frame import DeckTrackerFrame
+from gui.decklist_frame import DecklistFrame
+from gui.deck_preview_frame import DeckPreviewFrame
+from gui.add_deck_frame import AddDeckFrame
+from gui.stats_frame import StatsFrame
+from gui.deck_tracker_frame import DeckTrackerFrame
 import os
 
 

@@ -1,6 +1,6 @@
 from tkinter import *
-from cost_breakdown_frame import CostBreakdownFrame
-from card_image_frame import CardImageFrame
+from gui.graphs.cost_breakdown_frame import CostBreakdownFrame
+from gui.card_image_frame import CardImageFrame
 from class_icons import ClassIcons
 from PIL import ImageTk
 

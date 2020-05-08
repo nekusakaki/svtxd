@@ -1,5 +1,5 @@
 from tkinter import *
-from image_database_interface import ImageDatabaseInterface
+from database.image_database_interface import ImageDatabaseInterface
 from PIL import ImageTk, Image
 
 
@@ -82,7 +82,7 @@ class CardImageFrame:
 
     def gray_out_image(self):
         if self.count == 0:
-            self.img_copy = self.resized_img.convert('LA')
+            self.img_copy = self.resized_img.copy().convert('LA')
         else:
             self.img_copy = self.resized_img
 

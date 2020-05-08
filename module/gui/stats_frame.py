@@ -2,12 +2,12 @@ from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk
 from class_icons import ClassIcons
-from match_breakdown_frame import MatchBreakdownFrame
-from wins_breakdown_frame import WinsBreakdownFrame
-from match_history_frame import MatchHistoryFrame
-from losses_breakdown_frame import LossesBreakdownFrame
-from first_breakdown_frame import FirstBreakdownFrame
-from second_breakdown_frame import SecondBreakdownFrame
+from gui.graphs.match_breakdown_frame import MatchBreakdownFrame
+from gui.graphs.wins_breakdown_frame import WinsBreakdownFrame
+from gui.match_history_frame import MatchHistoryFrame
+from gui.graphs.losses_breakdown_frame import LossesBreakdownFrame
+from gui.graphs.first_breakdown_frame import FirstBreakdownFrame
+from gui.graphs.second_breakdown_frame import SecondBreakdownFrame
 
 
 class StatsFrame:

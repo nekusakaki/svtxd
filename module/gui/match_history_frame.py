@@ -1,5 +1,5 @@
 from tkinter import *
-from match_frame import MatchFrame
+from gui.match_frame import MatchFrame
 
 
 class MatchHistoryFrame:
