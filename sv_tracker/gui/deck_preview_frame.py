@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk
-from class_icons import ClassIcons
+from sv_tracker.class_icons import ClassIcons
 
 
 class DeckPreviewFrame:

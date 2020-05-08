@@ -1,5 +1,5 @@
 from tkinter import *
-from database.image_database_interface import ImageDatabaseInterface
+from sv_tracker.database.image_database_interface import ImageDatabaseInterface
 from PIL import ImageTk, Image
 
 

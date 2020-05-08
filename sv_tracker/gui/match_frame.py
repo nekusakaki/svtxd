@@ -1,6 +1,6 @@
 from tkinter import *
-from class_icons import ClassIcons
 from PIL import ImageTk
+from sv_tracker.class_icons import ClassIcons
 
 
 class MatchFrame:

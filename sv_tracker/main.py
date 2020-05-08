@@ -1,5 +1,5 @@
 from tkinter import *
-from gui.main_frame import MainFrame
+from sv_tracker.gui.main_frame import MainFrame
 import matplotlib
 
 

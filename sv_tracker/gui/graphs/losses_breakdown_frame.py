@@ -1,7 +1,7 @@
 from tkinter import *
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import helper_functions as hf
+import sv_tracker.helper_functions as hf
 
 
 class LossesBreakdownFrame:

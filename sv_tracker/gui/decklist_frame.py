@@ -1,8 +1,8 @@
 from tkinter import *
-from gui.graphs.cost_breakdown_frame import CostBreakdownFrame
-from gui.card_image_frame import CardImageFrame
-from class_icons import ClassIcons
 from PIL import ImageTk
+from sv_tracker.class_icons import ClassIcons
+from sv_tracker.gui.graphs.cost_breakdown_frame import CostBreakdownFrame
+from sv_tracker.gui.card_image_frame import CardImageFrame
 
 
 class DecklistFrame:

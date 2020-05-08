@@ -1,5 +1,5 @@
 from tkinter import *
-from gui.match_frame import MatchFrame
+from sv_tracker.gui.match_frame import MatchFrame
 
 
 class MatchHistoryFrame:

@@ -1,8 +1,8 @@
-from match_statistics import MatchStatistics
-from match_history import MatchHistory
+from sv_tracker.match_statistics import MatchStatistics
+from sv_tracker.match_history import MatchHistory
 import json
 from urllib.request import urlopen
-from card import Card
+from sv_tracker.card import Card
 import pickle
 import uuid
 

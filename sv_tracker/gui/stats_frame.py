@@ -1,13 +1,13 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk
-from class_icons import ClassIcons
-from gui.graphs.match_breakdown_frame import MatchBreakdownFrame
-from gui.graphs.wins_breakdown_frame import WinsBreakdownFrame
-from gui.match_history_frame import MatchHistoryFrame
-from gui.graphs.losses_breakdown_frame import LossesBreakdownFrame
-from gui.graphs.first_breakdown_frame import FirstBreakdownFrame
-from gui.graphs.second_breakdown_frame import SecondBreakdownFrame
+from sv_tracker.class_icons import ClassIcons
+from sv_tracker.gui.graphs.match_breakdown_frame import MatchBreakdownFrame
+from sv_tracker.gui.graphs.wins_breakdown_frame import WinsBreakdownFrame
+from sv_tracker.gui.match_history_frame import MatchHistoryFrame
+from sv_tracker.gui.graphs.losses_breakdown_frame import LossesBreakdownFrame
+from sv_tracker.gui.graphs.first_breakdown_frame import FirstBreakdownFrame
+from sv_tracker.gui.graphs.second_breakdown_frame import SecondBreakdownFrame
 
 
 class StatsFrame:

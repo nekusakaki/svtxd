@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
-from deck import Deck
+from sv_tracker.deck import Deck
 
 
 class AddDeckFrame:
