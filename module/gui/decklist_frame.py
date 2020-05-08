@@ -66,7 +66,6 @@ class DecklistFrame:
     def resize(self, event):
         scale = event.width / 385
         self.resize_card_images(scale)
-        # self.resize_deck_name(scale)
         self.cards_frame.configure(width=event.width, height=self.cards_frame.winfo_reqheight())
         canvas_height = self.height - \
                         (self.deck_name_label.winfo_height() + self.cost_breakdown_frame.frame.winfo_height()) - \
@@ -84,10 +83,6 @@ class DecklistFrame:
     def resize_card_images(self, scale):
         for card_id in self.cards:
             self.cards[card_id].resize(scale)
-
-    def resize_deck_name(self, scale):
-        new_height = int(4 * scale)
-        self.deck_name_label.configure(height=new_height)
 
     def delete(self):
         for child in self.frame.winfo_children():

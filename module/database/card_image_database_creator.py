@@ -42,7 +42,7 @@ card_ids = c_card.execute('SELECT card_id FROM cards').fetchall()
 num_of_cards = len(card_ids)
 
 for index, card_id in enumerate(card_ids):
-    image_path = '../images/card_flair' + str(card_id) + '.jpg'
+    image_path = 'images/card_flair' + str(card_id) + '.jpg'
     with open(image_path, 'rb') as file:
         data = file.read()
 

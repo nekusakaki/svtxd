@@ -43,7 +43,7 @@ class DeckTrackerFrame:
             self.deck.increment_wins(clan, first, duration)
         else:
             self.deck.increment_losses(clan, first, duration)
-        self.deck.save_to_file('../decks/')
+        self.deck.save_to_file('decks/')
 
         self.function()
         self.log_match_window.destroy()

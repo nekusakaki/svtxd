@@ -14,7 +14,7 @@ class ClassIcons:
 
     def generate_icons(self):
         icons = {}
-        folder_path = '../images/class_icons/'
+        folder_path = 'images/class_icons/'
 
         for root, directories, files in os.walk(folder_path):
             for file in files:

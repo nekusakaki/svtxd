@@ -12,7 +12,7 @@ import os
 
 class MainFrame:
     def __init__(self, master):
-        self.decks = self.load_decks('../decks/')
+        self.decks = self.load_decks('decks/')
         self.decks_sorted = self.sort_decks()
         self.displayed_decks = self.decks
         self.deck_previews = {}
@@ -82,7 +82,7 @@ class MainFrame:
         self.add_popup.focus_set()
 
     def add_deck(self, deck):
-        deck.save_to_file('../decks/')
+        deck.save_to_file('decks/')
         self.decks.append(deck)
         self.deck_previews[deck] = DeckPreviewFrame(self.decks_frame, deck, self.view_deck)
         self.decks_sorted = self.sort_decks()
