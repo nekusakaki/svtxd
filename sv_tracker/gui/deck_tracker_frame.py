@@ -22,7 +22,7 @@ class DeckTrackerFrame:
         self.stop_watch_frame = StopwatchFrame(self.frame)
         self.turn_timer_frame = TurnTimerFrame(self.frame)
 
-        self.reset_button = ttk.Button(self.frame, text='RESET CARDS', command=self.reset)
+        self.reset_button = ttk.Button(self.frame, text='RESET DECK', command=self.reset)
 
         self.log_match_window = None
         self.log_match_frame = None
@@ -64,7 +64,7 @@ class DeckTrackerFrame:
 
             counter_button = ChangeCountFrame(self.cards_frame, card_id,
                                               self.increment_card, self.decrement_card)
-            counter_button.frame.grid(row=index, column=1, sticky=N+S)
+            counter_button.frame.grid(row=index, column=1, sticky=N+S, padx=5)
             self.counter_buttons[card_id] = counter_button
 
     def increment_card(self, card_id):
@@ -85,7 +85,7 @@ class DeckTrackerFrame:
         self.log_match_button.grid(row=3, column=0, sticky=N+E+W+S, padx=5)
 
     def resize(self, event):
-        scale = event.width / 480
+        scale = event.width / 488
         self.resize_card_images(scale)
         self.resize_counter_buttons(scale)
         self.cards_frame.configure(width=event.width, height=self.cards_frame.winfo_reqheight())

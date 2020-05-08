@@ -11,7 +11,8 @@ class DeckPreviewFrame:
         self.function = function
 
         self.class_icon = ClassIcons().get_icon(self.deck.clan())
-        self.tk_image = ImageTk.PhotoImage(self.class_icon)
+        self.resized_image = self.class_icon.resize((50, 50))
+        self.tk_image = ImageTk.PhotoImage(self.resized_image)
 
         self.frame = ttk.Frame(master)
         self.icon_label = Label(self.frame, image=self.tk_image)

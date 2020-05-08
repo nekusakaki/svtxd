@@ -18,8 +18,9 @@ class TrackedDeck:
         return self._current_card_counts[card_id]
 
     def increment_card_count(self, card_id):
-        self._current_card_counts[card_id] += 1
-        self._cards_left += 1
+        if self._current_card_counts[card_id] < 3:
+            self._current_card_counts[card_id] += 1
+            self._cards_left += 1
 
     def decrement_card_count(self, card_id):
         if self._current_card_counts[card_id] > 0:

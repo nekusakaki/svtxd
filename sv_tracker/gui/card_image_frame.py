@@ -43,18 +43,18 @@ class CardImageFrame:
 
         class_color = {
             0: 'gray',
-            1: 'green',
-            2: 'yellow',
-            3: 'blue',
-            4: 'orange',
-            5: 'purple',
-            6: 'red',
-            7: 'lightgray',
-            8: 'darkgray',
+            1: '#339900',
+            2: '#D7CD4C',
+            3: '#333399',
+            4: '#CC6633',
+            5: '#9D87DE',
+            6: '#990033',
+            7: '#B0A979',
+            8: '#41ACE1',
         }
 
         frame = Frame(parent, width=width, height=height, bg=class_color[self.card_clan], bd=0)
-        label = Label(frame, bg=frame['bg'], text=self.cost, bd=0, font="times 12 bold")
+        label = Label(frame, bg=frame['bg'], text=self.cost, bd=0, fg="white", font="times 12 bold")
         label.place(relx=0.5, rely=0.5, x=0, y=0, anchor="center")
         return frame
 

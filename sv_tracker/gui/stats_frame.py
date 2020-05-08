@@ -16,7 +16,9 @@ class StatsFrame:
 
         self.frame = Frame(master, width=320, height=500, padx=5, pady=5)
 
-        self.tk_image = ImageTk.PhotoImage(ClassIcons().get_icon(self.deck.clan()))
+        self.class_icon = ClassIcons().get_icon(self.deck.clan())
+        self.resized_image = self.class_icon.resize((50, 50))
+        self.tk_image = ImageTk.PhotoImage(self.resized_image)
         self.deck_name_label = Label(self.frame, image=self.tk_image, text=self.deck.name, bg="black",
                                      fg="white", compound=RIGHT, anchor=E, font="Sans 12 bold")
 

@@ -11,7 +11,9 @@ class DecklistFrame:
         self.height = 500
         self.frame = Frame(parent, height=self.height, padx=5, pady=5)
 
-        self.tk_image = ImageTk.PhotoImage(ClassIcons().get_icon(self.decklist.clan()))
+        self.class_icon = ClassIcons().get_icon(self.decklist.clan())
+        self.resized_image = self.class_icon.resize((50, 50))
+        self.tk_image = ImageTk.PhotoImage(self.resized_image)
         self.deck_name_label = self._generate_deck_name_label(self.frame)
 
         self.cards_canvas = Canvas(self.frame, width=300)
