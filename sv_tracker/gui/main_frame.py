@@ -19,7 +19,7 @@ class MainFrame:
         self.current_clan = 'All'
         self.current_deck = None
 
-        self.frame = Frame(master, width=300, height=300)
+        self.frame = Frame(master, width=300, height=400)
         self.add_deck_button = ttk.Button(self.frame, text="ADD DECK", command=self.add_deck_popup)
         self.sort_buttons_frame = Frame(self.frame)
         self.decks_canvas = Canvas(self.frame, width=300, scrollregion=(0, 0, 300, 500), highlightthickness=0)
@@ -185,6 +185,7 @@ class MainFrame:
             return
 
         if self.current_deck:
+            self.deck_previews[self.current_deck].deselect()
             for child in self.tab_frame_0.winfo_children():
                 child.destroy()
             for child in self.tab_frame_1.winfo_children():
@@ -194,6 +195,8 @@ class MainFrame:
         self.stats_frame.destroy()
 
         self.current_deck = deck
+
+        self.deck_previews[self.current_deck].select()
         self.preview_deck()
         self.preview_stats()
 
@@ -212,7 +215,7 @@ class MainFrame:
 
         self.decks_canvas.grid(row=2, column=0, sticky=N+E+W+S)
         self.decks_canvas.configure(yscrollcommand=self.vbar.set)
-        self.decks_canvas.create_window((0, 0), window=self.decks_frame, anchor=N+W)
+        self.decks_canvas.create_window((0, 0), window=self.decks_frame, width=363, anchor=N+W)
         self.decks_canvas.bind('<Enter>', self.bind_mousewheel)
         self.decks_canvas.bind('<Leave>', self.unbind_mousewheel)
 
