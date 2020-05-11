@@ -49,7 +49,7 @@ class DeckPreviewFrame:
         self.frame.unbind_all('<Button-1>')
 
     def select(self):
-        self.frame.config(highlightbackground='blue')
+        self.frame.config(highlightbackground='#339900')
 
     def deselect(self):
         self.frame.config(highlightbackground=self.frame['bg'])

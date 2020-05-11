@@ -43,5 +43,5 @@ class ChangeCountFrame:
         self.dec_button.configure(image=self.tk_minus, width=new_width, height=new_height)
 
     def adjust_widgets(self):
-        self.dec_button.pack(side=LEFT)
-        self.inc_button.pack(side=LEFT, padx=3)
+        self.inc_button.pack(side=LEFT)
+        self.dec_button.pack(side=LEFT, padx=3)

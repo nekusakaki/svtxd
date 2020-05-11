@@ -34,7 +34,8 @@ class CardImageFrame:
     def _generate_canvas(self, parent):
         canvas = Canvas(parent, width=self.tk_img.width(), height=self.tk_img.height(), bd=0)
         canvas.create_image(0, 2, image=self.tk_img, anchor=NW)
-        canvas.create_text(10, self.tk_img.height()/2, text=self.card_name, anchor=W, fill="white")
+        canvas.create_text(10, self.tk_img.height()/2, text=self.card_name, anchor=W,
+                           fill="white")
         return canvas
 
     def _generate_cost_frame(self, parent):
@@ -63,7 +64,7 @@ class CardImageFrame:
         width = height
         frame = Frame(parent, width=width, height=height, bg="black", bd=0)
         label = Label(frame, bg=frame['bg'], text='x' + str(self.count), bd=0, fg="white",
-                      font="arial 10")
+                      font="fira 10 bold")
         label.place(relx=0.5, rely=0.5, x=0, y=0, anchor="center")
         self.count_label = label
         return frame
@@ -100,7 +101,9 @@ class CardImageFrame:
         self.canvas.delete(1)
         self.canvas.delete(2)
         self.canvas.create_image(0, 2, image=self.tk_img, anchor=NW)
-        self.canvas.create_text(10, self.canvas.winfo_height() / 2, text=self.card_name, anchor=W, fill="white")
+        font_size = max(int((self.canvas.winfo_height() / 35) * 10), 8)
+        self.canvas.create_text(10, self.canvas.winfo_height() / 2, text=self.card_name, anchor=W,
+                                fill="white", font='fira ' + str(font_size) + ' bold')
 
     def resize(self, scale):
         self.resize_label(scale)
