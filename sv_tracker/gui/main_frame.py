@@ -19,7 +19,7 @@ class MainFrame:
         self.current_clan = 'All'
         self.current_deck = None
 
-        self.frame = Frame(master, width=300, height=400)
+        self.frame = Frame(master, width=300, height=500)
         self.add_deck_button = ttk.Button(self.frame, text="ADD DECK", command=self.add_deck_popup)
         self.sort_buttons_frame = Frame(self.frame)
         self.decks_canvas = Canvas(self.frame, width=300, scrollregion=(0, 0, 300, 500), highlightthickness=0)
@@ -184,6 +184,7 @@ class MainFrame:
         if deck == self.current_deck:
             return
 
+        self.deck_previews[deck].select()
         if self.current_deck:
             self.deck_previews[self.current_deck].deselect()
             for child in self.tab_frame_0.winfo_children():
@@ -196,7 +197,6 @@ class MainFrame:
 
         self.current_deck = deck
 
-        self.deck_previews[self.current_deck].select()
         self.preview_deck()
         self.preview_stats()
 

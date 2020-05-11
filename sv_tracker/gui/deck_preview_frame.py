@@ -14,9 +14,9 @@ class DeckPreviewFrame:
         self.resized_image = self.class_icon.resize((50, 50))
         self.tk_image = ImageTk.PhotoImage(self.resized_image)
 
-        self.frame = Frame(master, highlightthickness=2)
+        self.frame = Frame(master)
         self.icon_label = Label(self.frame, image=self.tk_image)
-        self.deck_name_label = ttk.Label(self.frame, text=self.deck.name, anchor=W, font="10")
+        self.deck_name_label = Label(self.frame, text=self.deck.name, anchor=W, font="Arial 14")
         self.stats_label = self.generate_stats_label(self.frame)
 
         self.adjust_widgets()
@@ -28,7 +28,7 @@ class DeckPreviewFrame:
         else:
             win_rate = '{:.2f}'.format(self.deck.win_rate())
             text = win_rate + ' | ' + str(self.deck.wins()) + '-' + str(self.deck.losses())
-        label = ttk.Label(master, text=text, anchor=W)
+        label = Label(master, text=text, anchor=W)
         return label
 
     def view_deck(self, event):
@@ -49,7 +49,26 @@ class DeckPreviewFrame:
         self.frame.unbind_all('<Button-1>')
 
     def select(self):
-        self.frame.config(highlightbackground='#339900')
+        class_color = {
+            'Forest': '#339900',
+            'Sword': '#D7CD4C',
+            'Rune': '#333399',
+            'Dragon': '#CC6633',
+            'Shadow': '#9D87DE',
+            'Blood': '#990033',
+            'Haven': '#B0A979',
+            'Portal': '#41ACE1',
+        }
+
+        bg_color = class_color.get(self.deck.clan())
+
+        self.frame.config(bg=bg_color)
+        self.icon_label.config(bg=bg_color)
+        self.deck_name_label.config(bg=bg_color, fg='white')
+        self.stats_label.config(bg=bg_color, fg='white')
 
     def deselect(self):
-        self.frame.config(highlightbackground=self.frame['bg'])
+        self.frame.config(bg='SystemButtonFace')
+        self.icon_label.config(bg=self.frame['bg'])
+        self.deck_name_label.config(bg=self.frame['bg'], fg='black')
+        self.stats_label.config(bg=self.frame['bg'], fg='black')
