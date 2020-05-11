@@ -31,6 +31,16 @@ class MatchStatistics:
         else:
             self.second_wins += 1
 
+    def decrement_wins(self, first):
+        if self.wins == 0:
+            return
+
+        self.wins -= 1
+        if first:
+            self.first_wins -= 1
+        else:
+            self.second_wins -= 1
+
     def increment_losses(self, first):
         self.losses += 1
         if first:
@@ -38,9 +48,30 @@ class MatchStatistics:
         else:
             self.second_losses += 1
 
+    def decrement_losses(self, first):
+        if self.losses == 0:
+            return
+
+        self.losses -= 1
+        if first:
+            self.first_losses -= 1
+        else:
+            self.second_losses -= 1
+
     def increment_clan_wins(self, clan):
         self.clan_wins[clan - 1] += 1
+
+    def decrement_clan_wins(self, clan):
+        if self.clan_wins[clan - 1] == 0:
+            return
+
+        self.clan_wins[clan - 1] -= 1
 
     def increment_clan_losses(self, clan):
         self.clan_losses[clan - 1] += 1
 
+    def decrement_clan_losses(self, clan):
+        if self.clan_losses[clan - 1] == 0:
+            return
+
+        self.clan_losses[clan - 1] -= 1

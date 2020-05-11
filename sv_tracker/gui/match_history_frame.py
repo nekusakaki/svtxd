@@ -5,8 +5,8 @@ from sv_tracker.gui.match_frame import MatchFrame
 class MatchHistoryFrame:
     def __init__(self, master, deck):
         self.deck = deck
-        self.frame = Frame(master, width=300, height=200)
-        self.canvas = Canvas(self.frame, width=300, height=200, scrollregion=(0, 0, 320, 500))
+        self.frame = Frame(master, width=300, height=150)
+        self.canvas = Canvas(self.frame, width=300, height=150, scrollregion=(0, 0, 320, 500))
         self.vbar = Scrollbar(self.frame, orient=VERTICAL)
         self.matches_frame = Frame(self.canvas, width=300)
         self.matches = []

@@ -152,6 +152,17 @@ class Deck:
     def get_matches(self):
         return self._history.get_matches()
 
+    def delete_match(self, match_index):
+        deleted_match = self._history.get_match(match_index)
+        self._history.delete_match(match_index)
+
+        if deleted_match['won']:
+            self._stats.decrement_wins(deleted_match['first'])
+            self._stats.decrement_clan_wins(deleted_match['class'])
+        else:
+            self._stats.decrement_losses(deleted_match['first'])
+            self._stats.decrement_clan_losses(deleted_match['class'])
+
     def card_breakdown(self):
         if not self._card_breakdown:
             card_breakdown = {'Follower': 0, 'Amulet': 0, 'Spell': 0}

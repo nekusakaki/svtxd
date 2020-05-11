@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk
 from sv_tracker.class_icons import ClassIcons
+from sv_tracker.gui.edit_matches_frame import EditMatchesFrame
 from sv_tracker.gui.graphs.match_breakdown_frame import MatchBreakdownFrame
 from sv_tracker.gui.graphs.wins_breakdown_frame import WinsBreakdownFrame
 from sv_tracker.gui.match_history_frame import MatchHistoryFrame
@@ -11,8 +12,9 @@ from sv_tracker.gui.graphs.second_breakdown_frame import SecondBreakdownFrame
 
 
 class StatsFrame:
-    def __init__(self, master, deck):
+    def __init__(self, master, deck, refresh):
         self.deck = deck
+        self.refresh = refresh
 
         self.frame = Frame(master, width=320, height=500, padx=5, pady=5)
 
@@ -21,6 +23,10 @@ class StatsFrame:
         self.tk_image = ImageTk.PhotoImage(self.resized_image)
         self.deck_name_label = Label(self.frame, image=self.tk_image, text=self.deck.name, bg="black",
                                      fg="white", compound=RIGHT, anchor=E, font="Sans 12 bold")
+
+        self.edit_window = None
+        self.edit_matches_frame = None
+        self.edit_matches = ttk.Button(self.frame, text="EDIT MATCHES", command=self.edit)
 
         self.figures_notebook = ttk.Notebook(self.frame)
         self.match_breakdown_frame = MatchBreakdownFrame(self.figures_notebook, self.deck)
@@ -32,6 +38,12 @@ class StatsFrame:
         self.match_history_frame = MatchHistoryFrame(self.frame, self.deck)
 
         self.adjust_widgets()
+
+    def edit(self):
+        self.edit_window = Toplevel()
+        self.edit_matches_frame = EditMatchesFrame(self.edit_window, self.deck, self.refresh)
+        self.edit_matches_frame.frame.pack()
+
 
     def adjust_widgets(self):
         self.deck_name_label.grid(row=0, column=0, sticky=E+W)
@@ -51,7 +63,13 @@ class StatsFrame:
         self.figures_notebook.add(self.first_breakdown_frame.frame, text='First')
         self.figures_notebook.add(self.second_breakdown_frame.frame, text='Second')
 
+        self.edit_matches.grid(row=3, column=0, sticky=N+E+W+S, padx=5, pady=5)
+
     def destroy(self):
+        if self.edit_matches:
+            self.edit_matches.destroy()
+            self.edit_matches = None
+
         self.match_breakdown_frame.destroy()
         self.wins_breakdown_frame.destroy()
         self.losses_breakdown_frame.destroy()
