@@ -21,8 +21,10 @@ class LossesBreakdownFrame:
         ax = fig.subplots()
         ax.axis('equal')
         classes = ['Forest', 'Sword', 'Rune', 'Dragon', 'Shadow', 'Blood', 'Haven', 'Portal']
+        colors = ['#339900', '#D7CD4C', '#333399', '#CC6633', '#9D87DE', '#990033', '#B0A979', '#41ACE1']
         total = sum(self.losses_breakdown)
-        ax.pie(self.losses_breakdown, labels=classes, autopct=lambda p: '{:.0f}'.format(p * total / 100))
+        ax.pie(self.losses_breakdown, labels=classes, colors=colors,
+               autopct=lambda p: '{:.0f}'.format(p * total / 100))
         ax.set_title('Losses Breakdown By Class')
 
         background = hf.rgb_to_hex(self.frame.winfo_rgb(self.frame['bg']))

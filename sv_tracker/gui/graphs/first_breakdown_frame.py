@@ -21,7 +21,8 @@ class FirstBreakdownFrame:
         ax = fig.subplots()
         ax.axis('equal')
         legend = ['Wins', 'Losses']
-        ax.pie(self.first_breakdown, labels=legend, autopct='%1.2f')
+        colors = ['#339900', '#990033']
+        ax.pie(self.first_breakdown, labels=legend, colors=colors, autopct='%1.2f')
         ax.set_title('Going First Breakdown')
 
         background = hf.rgb_to_hex(self.frame.winfo_rgb(self.frame['bg']))

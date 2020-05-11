@@ -23,7 +23,8 @@ class MatchBreakdownFrame:
         ax = fig.subplots()
         ax.axis('equal')
         classes = ['Forest', 'Sword', 'Rune', 'Dragon', 'Shadow', 'Blood', 'Haven', 'Portal']
-        ax.pie(self.match_breakdown, labels=classes, autopct='%1.2f')
+        colors = ['#339900', '#D7CD4C', '#333399', '#CC6633', '#9D87DE', '#990033', '#B0A979', '#41ACE1']
+        ax.pie(self.match_breakdown, labels=classes, colors=colors, autopct='%1.2f')
 
         ax.set_title('Opponent Breakdown By Class')
 

@@ -30,14 +30,15 @@ class CostBreakdownFrame:
         width = 0.9
         fig = plt.Figure(figsize=(2, 2), dpi=75)
         ax = fig.subplots()
-        ax.bar(labels, follower_counts, width, color='b')
-        ax.bar(labels, amulet_counts, width, bottom=follower_counts, color='g')
-        ax.bar(labels, spell_counts, width, bottom=fa_counts, color='r')
+        ax.bar(labels, follower_counts, width, color='#333399', label='Followers')
+        ax.bar(labels, amulet_counts, width, bottom=follower_counts, color='#339900', label='Amulets')
+        ax.bar(labels, spell_counts, width, bottom=fa_counts, color='#990033', label='Spells')
         ax.yaxis.set_visible(False)
         ax.spines["top"].set_visible(False)
         ax.spines["left"].set_visible(False)
         ax.spines["right"].set_visible(False)
         background_color = hf.rgb_to_hex(self.frame.winfo_rgb(self.frame['bg']))
+        fig.legend()
         ax.set_facecolor(background_color)
         ax.set_title('Cost Breakdown')
 
