@@ -30,3 +30,9 @@ class SecondBreakdownFrame:
         second_chart = FigureCanvasTkAgg(fig, self.frame)
         second_chart.get_tk_widget().pack(fill=BOTH)
         return second_chart
+
+    def destroy(self):
+        if type(self.second_chart) is Label:
+            return
+
+        plt.close(self.second_chart.figure)

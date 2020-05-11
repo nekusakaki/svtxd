@@ -51,3 +51,9 @@ class StatsFrame:
         self.figures_notebook.add(self.first_breakdown_frame.frame, text='First')
         self.figures_notebook.add(self.second_breakdown_frame.frame, text='Second')
 
+    def destroy(self):
+        self.match_breakdown_frame.destroy()
+        self.wins_breakdown_frame.destroy()
+        self.losses_breakdown_frame.destroy()
+        self.first_breakdown_frame.destroy()
+        self.second_breakdown_frame.destroy()

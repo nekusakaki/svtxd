@@ -30,3 +30,9 @@ class FirstBreakdownFrame:
         first_chart = FigureCanvasTkAgg(fig, self.frame)
         first_chart.get_tk_widget().pack(fill=BOTH)
         return first_chart
+
+    def destroy(self):
+        if type(self.first_chart) is Label:
+            return
+
+        plt.close(self.first_chart.figure)

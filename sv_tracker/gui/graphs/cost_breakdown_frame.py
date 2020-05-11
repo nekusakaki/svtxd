@@ -27,7 +27,7 @@ class CostBreakdownFrame:
 
         fa_counts = [x + y for x, y in zip(follower_counts, amulet_counts)]
         labels = ['0', '1', '2', '3', '4', '5', '6', '7', '8+']
-        width = 0.8
+        width = 0.9
         fig = plt.Figure(figsize=(2, 2), dpi=75)
         ax = fig.subplots()
         ax.bar(labels, follower_counts, width, color='b')
@@ -50,3 +50,5 @@ class CostBreakdownFrame:
     def resize(self, event):
         self.frame.configure(width=event.width, height=event.width)
 
+    def destroy(self):
+        plt.close(self.cost_chart.figure)

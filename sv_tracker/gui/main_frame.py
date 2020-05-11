@@ -190,6 +190,9 @@ class MainFrame:
             for child in self.tab_frame_1.winfo_children():
                 child.destroy()
 
+        self.decklist_frame.destroy()
+        self.stats_frame.destroy()
+
         self.current_deck = deck
         self.preview_deck()
         self.preview_stats()

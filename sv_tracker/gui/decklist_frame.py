@@ -86,8 +86,5 @@ class DecklistFrame:
         for card_id in self.cards:
             self.cards[card_id].resize(scale)
 
-    def delete(self):
-        for child in self.frame.winfo_children():
-            child.destroy()
-
-        self.frame.destroy()
+    def destroy(self):
+        self.cost_breakdown_frame.destroy()

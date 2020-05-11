@@ -31,3 +31,9 @@ class LossesBreakdownFrame:
         losses_chart = FigureCanvasTkAgg(fig, self.frame)
         losses_chart.get_tk_widget().pack(fill=BOTH)
         return losses_chart
+
+    def destroy(self):
+        if type(self.losses_chart) is Label:
+            return
+
+        plt.close(self.losses_chart.figure)

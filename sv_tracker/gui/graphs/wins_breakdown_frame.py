@@ -31,3 +31,9 @@ class WinsBreakdownFrame:
         wins_chart = FigureCanvasTkAgg(fig, self.frame)
         wins_chart.get_tk_widget().pack(fill=BOTH)
         return wins_chart
+
+    def destroy(self):
+        if type(self.wins_chart) is Label:
+            return
+
+        plt.close(self.wins_chart.figure)

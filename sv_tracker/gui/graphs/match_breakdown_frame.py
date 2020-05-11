@@ -33,3 +33,9 @@ class MatchBreakdownFrame:
         match_chart = FigureCanvasTkAgg(fig, self.frame)
         match_chart.get_tk_widget().pack(fill=BOTH)
         return match_chart
+
+    def destroy(self):
+        if type(self.match_chart) is Label:
+            return
+
+        plt.close(self.match_chart.figure)
