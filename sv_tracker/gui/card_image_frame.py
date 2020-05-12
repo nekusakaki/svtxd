@@ -16,7 +16,8 @@ class CardImageFrame:
 
         self.card_name = card.card_name
         self.cost = card.cost
-        self.count = count
+        self.original_count = count
+        self.current_count = count
         self.card_clan = card.clan
 
         self.frame = self._generate_frame(parent)
@@ -63,7 +64,7 @@ class CardImageFrame:
         height = self.tk_img.height()
         width = height
         frame = Frame(parent, width=width, height=height, bg="black", bd=0)
-        label = Label(frame, bg=frame['bg'], text='x' + str(self.count), bd=0, fg="white",
+        label = Label(frame, bg=frame['bg'], text='x' + str(self.current_count), bd=0, fg="white",
                       font="fira 10 bold")
         label.place(relx=0.5, rely=0.5, x=0, y=0, anchor="center")
         self.count_label = label
@@ -75,14 +76,14 @@ class CardImageFrame:
         self.count_frame.grid(row=0, column=2)
 
     def update_count(self, count):
-        self.count = count
-        self.count_label.configure(text='x' + str(self.count))
+        self.current_count = count
+        self.count_label.configure(text='x' + str(self.current_count))
         self.gray_out_image()
         self.update_canvas()
         self.gray_out_count()
 
     def gray_out_image(self):
-        if self.count == 0:
+        if self.current_count == 0:
             self.img_copy = self.resized_img.copy().convert('LA')
             gray = Image.new('LA', (self.img_copy.width, self.img_copy.height), '#666666')
             self.img_copy = Image.blend(self.img_copy, gray, 0.5)
@@ -90,11 +91,15 @@ class CardImageFrame:
             self.img_copy = self.resized_img
 
     def gray_out_count(self):
+        fg_color = 'white'
         color = 'black'
-        if self.count == 0:
+        if self.current_count == 0:
             color = 'gray'
+        elif self.current_count != self.original_count:
+            fg_color = 'black'
+            color = '#90EE90'
         self.count_frame.configure(bg=color)
-        self.count_label.configure(bg=self.count_frame['bg'])
+        self.count_label.configure(bg=self.count_frame['bg'], fg=fg_color)
 
     def update_canvas(self):
         self.tk_img = ImageTk.PhotoImage(self.img_copy)
