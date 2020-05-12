@@ -76,7 +76,7 @@ class Deck:
         if not self._cards:
             self._generate_cards()
 
-        return self._cards
+        return self._cards.copy()
 
     def card_list(self):
         card_ids = []
@@ -90,12 +90,14 @@ class Deck:
         if not self._card_counts:
             self._generate_card_counts()
 
-        return self._card_counts
+        return self._card_counts.copy()
 
     def vials(self):
         total_vials = 0
-        for card_id in self.cards():
-            total_vials += self.cards()[card_id].vials * self.card_counts()[card_id]
+        cards = self.cards()
+        card_counts = self.card_counts()
+        for card_id in cards:
+            total_vials += cards[card_id].vials * card_counts[card_id]
 
         return total_vials
 
@@ -132,13 +134,13 @@ class Deck:
         self._history.add_match(clan, first, False, duration)
 
     def wins_breakdown(self):
-        return self._stats.clan_wins
+        return self._stats.clan_wins.copy()
 
     def clan_wins(self, clan):
         return self._stats.clan_wins[clan - 1]
 
     def losses_breakdown(self):
-        return self._stats.clan_losses
+        return self._stats.clan_losses.copy()
 
     def clan_losses(self, clan):
         return self._stats.clan_losses[clan - 1]
@@ -180,8 +182,9 @@ class Deck:
 
             card_types = {'Follower': 0, 'Amulet': 1, 'Spell': 2}
 
+            cards = self.cards()
             for card_id in self._card_ids:
-                card = self.cards()[card_id]
+                card = cards[card_id]
                 if card.cost < 8:
                     cost_breakdown[card.cost][card_types[card.get_card_type()]] += 1
                 else:
