@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 import os
+from sv_tracker.gui.splash_screen import SplashScreen
 from sv_tracker.deck import Deck
 from sv_tracker.gui.decklist_frame import DecklistFrame
 from sv_tracker.gui.deck_preview_frame import DeckPreviewFrame
@@ -12,6 +13,8 @@ from sv_tracker.gui.deck_tracker_frame import DeckTrackerFrame
 
 class MainFrame:
     def __init__(self, master):
+        master.withdraw()
+        self.splash_screen = SplashScreen(master)
         self.decks = self.load_decks('decks/')
         self.decks_sorted = self.sort_decks()
         self.displayed_decks = self.decks
@@ -42,6 +45,9 @@ class MainFrame:
         self.generate_deck_previews()
         self.fill_decks_frame()
         self.adjust_widgets()
+
+        self.splash_screen.destroy()
+        master.deiconify()
 
     def start(self):
         if self.current_deck is None:
@@ -117,7 +123,7 @@ class MainFrame:
 
     def fill_sort_buttons_frame(self):
         button = ttk.Button(self.sort_buttons_frame, text='All', command=lambda: self.show_clan_decks('All'))
-        button.grid(row=0, column=0)
+        button.grid(row=0, column=0, rowspan=2, sticky=N+E+W+S)
         button1 = ttk.Button(self.sort_buttons_frame, text='Forest', command=lambda: self.show_clan_decks('Forest'))
         button1.grid(row=0, column=1)
         button2 = ttk.Button(self.sort_buttons_frame, text='Sword', command=lambda: self.show_clan_decks('Sword'))
@@ -127,13 +133,13 @@ class MainFrame:
         button4 = ttk.Button(self.sort_buttons_frame, text='Dragon', command=lambda: self.show_clan_decks('Dragon'))
         button4.grid(row=0, column=4)
         button5 = ttk.Button(self.sort_buttons_frame, text='Shadow', command=lambda: self.show_clan_decks('Shadow'))
-        button5.grid(row=1, column=0)
+        button5.grid(row=1, column=1)
         button6 = ttk.Button(self.sort_buttons_frame, text='Blood', command=lambda: self.show_clan_decks('Blood'))
-        button6.grid(row=1, column=1)
+        button6.grid(row=1, column=2)
         button7 = ttk.Button(self.sort_buttons_frame, text='Haven', command=lambda: self.show_clan_decks('Haven'))
-        button7.grid(row=1, column=2)
+        button7.grid(row=1, column=3)
         button8 = ttk.Button(self.sort_buttons_frame, text='Portal', command=lambda: self.show_clan_decks('Portal'))
-        button8.grid(row=1, column=3)
+        button8.grid(row=1, column=4)
 
     def show_clan_decks(self, clan):
         if clan == 'All':
