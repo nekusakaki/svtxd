@@ -115,7 +115,7 @@ class MainFrame:
 
         for root, directories, files in os.walk(folder_path):
             for file in files:
-                if '.dck' in file:
+                if '.deck' in file:
                     deck_paths.append(folder_path + file)
 
         for path in deck_paths:

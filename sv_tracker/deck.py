@@ -51,7 +51,7 @@ class Deck:
     def save_to_file(self, file_path):
         self._cards.clear()
         file_name = self.name.replace(' ', '_') + '_' + self.uuid
-        full_path = file_path + file_name + '.dck'
+        full_path = file_path + file_name + '.deck'
         with open(full_path, 'wb') as output_file:
             pickle.dump(self, output_file, pickle.HIGHEST_PROTOCOL)
 
