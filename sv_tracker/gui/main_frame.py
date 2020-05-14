@@ -24,7 +24,7 @@ class MainFrame:
         self.current_clan = 'All'
         self.current_deck = None
 
-        self.frame = Frame(master, width=300, height=500)
+        self.frame = Frame(master, width=715, height=577)
         self.add_deck_button = ttk.Button(self.frame, text="ADD DECK", command=self.add_deck_popup)
         self.sort_buttons_frame = Frame(self.frame)
         self.decks_canvas = Canvas(self.frame, width=300, scrollregion=(0, 0, 300, 500), highlightthickness=0)
@@ -260,6 +260,7 @@ class MainFrame:
 
         self.frame.columnconfigure(0, weight=1)
         self.frame.columnconfigure(1, weight=0)
+        self.frame.grid_propagate(False)
 
     def bind_mousewheel(self, event):
         self.decks_canvas.bind_all('<MouseWheel>', self.on_mousewheel)
