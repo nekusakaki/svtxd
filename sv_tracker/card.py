@@ -1,4 +1,4 @@
-from sv_tracker.database.database_interface import DatabaseInterface
+from database_scripts.database_interface import DatabaseInterface
 
 
 class Card:
