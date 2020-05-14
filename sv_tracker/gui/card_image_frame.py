@@ -29,12 +29,12 @@ class CardImageFrame:
         self._adjust_labels()
 
     def _generate_frame(self, parent):
-        frame = Frame(parent, bd=0)
+        frame = Frame(parent, bd=0, borderwidth=0)
         return frame
 
     def _generate_canvas(self, parent):
         canvas = Canvas(parent, width=self.tk_img.width(), height=self.tk_img.height(), bd=0)
-        canvas.create_image(0, 2, image=self.tk_img, anchor=NW)
+        canvas.create_image(2, 2, image=self.tk_img, anchor=NW)
         canvas.create_text(10, self.tk_img.height()/2, text=self.card_name, anchor=W,
                            fill="white")
         return canvas
@@ -105,17 +105,17 @@ class CardImageFrame:
         self.tk_img = ImageTk.PhotoImage(self.img_copy)
         self.canvas.delete(1)
         self.canvas.delete(2)
-        self.canvas.create_image(0, 2, image=self.tk_img, anchor=NW)
+        self.canvas.create_image(2, 2, image=self.tk_img, anchor=NW)
         font_size = max(int((self.canvas.winfo_height() / 35) * 10), 8)
         self.canvas.create_text(10, self.canvas.winfo_height() / 2, text=self.card_name, anchor=W,
                                 fill="white", font='fira ' + str(font_size) + ' bold')
 
     def resize(self, scale):
-        self.resize_label(scale)
+        self.resize_canvas(scale)
         self.resize_cost_frame()
         self.resize_count_frame()
 
-    def resize_label(self, scale):
+    def resize_canvas(self, scale):
         new_width = int(self.card_img.width * scale)
         new_height = int(self.card_img.height * scale)
         self.resized_img = self.card_img.resize((new_width, new_height))

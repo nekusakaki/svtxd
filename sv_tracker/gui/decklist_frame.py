@@ -17,7 +17,7 @@ class DecklistFrame:
         self.deck_name_label = self._generate_deck_name_label(self.frame)
 
         self.cards_canvas = Canvas(self.frame, width=300)
-        self.cards_frame = Frame(self.cards_canvas, height=1000, bd=0, borderwidth=0)
+        self.cards_frame = Frame(self.cards_canvas, height=1000, bd=0)
         self.vbar = Scrollbar(self.frame, orient=VERTICAL)
         self.cost_breakdown_frame = CostBreakdownFrame(self.frame, decklist)
         self.cards = {}
