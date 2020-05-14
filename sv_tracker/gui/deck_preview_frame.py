@@ -27,7 +27,7 @@ class DeckPreviewFrame:
             text = "No Stats"
         else:
             win_rate = '{:.2f}'.format(self.deck.win_rate())
-            text = win_rate + ' | ' + str(self.deck.wins()) + '-' + str(self.deck.losses())
+            text = win_rate + '% | ' + str(self.deck.wins()) + '-' + str(self.deck.losses())
         label = Label(master, text=text, anchor=W)
         return label
 
@@ -68,7 +68,7 @@ class DeckPreviewFrame:
         self.stats_label.config(bg=bg_color, fg='white')
 
     def deselect(self):
-        self.frame.config(bg='SystemButtonFace')
+        self.frame.config(bg=self.frame.master['bg'])
         self.icon_label.config(bg=self.frame['bg'])
         self.deck_name_label.config(bg=self.frame['bg'], fg='black')
         self.stats_label.config(bg=self.frame['bg'], fg='black')
