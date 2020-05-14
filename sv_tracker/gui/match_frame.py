@@ -2,23 +2,25 @@ from tkinter import *
 from PIL import ImageTk
 from sv_tracker.class_icons import ClassIcons
 
+FONT = 'times 14'
+
 
 class MatchFrame:
     def __init__(self, master, match):
         self.match = match
-        self.frame = Frame(master, width=300, height=100, bd=1, relief=GROOVE)
+        self.frame = Frame(master)
 
         self.clan_icon = None
         self.tk_image = None
         self.clan_label = self.generate_clan_label()
 
-        self.first_label = Label(self.frame, width=8)
-        self.won_label = Label(self.frame, width=5)
+        self.first_label = Label(self.frame, width=9, font=FONT)
+        self.won_label = Label(self.frame, width=5, font=FONT)
 
         minutes = int(self.match['duration'] / 60)
         seconds = int(self.match['duration'] % 60)
         duration_text = str(minutes) + 'm ' + str(seconds) + 's'
-        self.duration_label = Label(self.frame, text=duration_text, width=10)
+        self.duration_label = Label(self.frame, text=duration_text, width=10, font=FONT)
 
         if self.match['first']:
             self.first_label.configure(text="FIRST")
