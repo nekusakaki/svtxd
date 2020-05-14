@@ -10,12 +10,14 @@ from sv_tracker.gui.add_deck_frame import AddDeckFrame
 from sv_tracker.gui.stats_frame import StatsFrame
 from sv_tracker.gui.deck_tracker_frame import DeckTrackerFrame
 
+DECK_FOLDER = 'decks/'
+
 
 class MainFrame:
     def __init__(self, master):
         master.withdraw()
         self.splash_screen = SplashScreen(master)
-        self.decks = self.load_decks('decks/')
+        self.decks = self.load_decks(DECK_FOLDER)
         self.decks_sorted = self.sort_decks()
         self.displayed_decks = self.decks
         self.deck_previews = {}
@@ -74,7 +76,7 @@ class MainFrame:
         self.deck_tracker.attributes('-topmost', 'true')
         self.deck_tracker.focus_set()
 
-        self.deck_tracker_frame = DeckTrackerFrame(self.deck_tracker, self.current_deck, self.refresh)
+        self.deck_tracker_frame = DeckTrackerFrame(self.deck_tracker, self.current_deck, self.refresh, self.save_deck)
         self.deck_tracker_frame.frame.pack(fill=BOTH, expand=TRUE)
         self.deck_tracker_frame.frame.bind('<Configure>', self.deck_tracker_frame.resize)
 
@@ -88,7 +90,7 @@ class MainFrame:
         self.add_popup.focus_set()
 
     def add_deck(self, deck):
-        deck.save_to_file('decks/')
+        self.save_deck(deck)
         self.decks.append(deck)
         self.deck_previews[deck] = DeckPreviewFrame(self.decks_frame, deck, self.view_deck)
         self.decks_sorted = self.sort_decks()
@@ -98,9 +100,18 @@ class MainFrame:
 
         self.show_clan_decks(self.current_clan)
 
+    def save_deck(self, deck):
+        if not os.path.exists(DECK_FOLDER):
+            os.makedirs(DECK_FOLDER)
+
+        deck.save_to_file(DECK_FOLDER)
+
     def load_decks(self, folder_path):
         decks = []
         deck_paths = []
+
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
 
         for root, directories, files in os.walk(folder_path):
             for file in files:

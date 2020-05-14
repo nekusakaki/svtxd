@@ -9,10 +9,11 @@ from sv_tracker.gui.log_match_frame import LogMatchFrame
 
 
 class DeckTrackerFrame:
-    def __init__(self, master, deck, refresh_function):
+    def __init__(self, master, deck, refresh_function, save_deck_function):
         self.deck = deck
         self.tracked_deck = TrackedDeck(self.deck)
-        self.function = refresh_function
+        self.refresh_function = refresh_function
+        self.save_deck_function = save_deck_function
 
         self.frame = Frame(master, pady=5)
         self.cards_frame = Frame(self.frame, padx=5, pady=0)
@@ -43,9 +44,9 @@ class DeckTrackerFrame:
             self.deck.increment_wins(clan, first, duration)
         else:
             self.deck.increment_losses(clan, first, duration)
-        self.deck.save_to_file('decks/')
 
-        self.function()
+        self.save_deck_function(self.deck)
+        self.refresh_function()
         self.log_match_window.destroy()
 
     def reset(self):
