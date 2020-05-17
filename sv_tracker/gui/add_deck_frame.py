@@ -54,3 +54,15 @@ class AddDeckFrame:
         self.deck_code_entry.grid(row=1, column=1)
 
         self.enter_button.grid(row=2, column=0, columnspan=2)
+
+        self.frame.bind('<FocusIn>', self.handle_focus)
+        self.frame.bind('<FocusOut>', self.handle_unfocus)
+
+    def handle_focus(self, event):
+        self.frame.bind_all('<Return>', self.enter_pressed)
+
+    def enter_pressed(self, event):
+        self.add_deck()
+
+    def handle_unfocus(self, event):
+        self.frame.unbind_all('<Return>')
