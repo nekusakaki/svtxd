@@ -37,7 +37,7 @@ class DeckTrackerFrame(Frame):
         self.log_match_window.transient(self)
 
         self.log_match_frame = LogMatchFrame(self.log_match_window, self.stop_watch_frame, self.log_match)
-        self.log_match_frame.frame.pack()
+        self.log_match_frame.pack()
 
     def log_match(self, win, clan, first, duration):
         if win:
