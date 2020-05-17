@@ -223,7 +223,7 @@ class MainFrame(Frame):
 
     def preview_stats(self):
         self.stats_frame = StatsFrame(self.tab_frame_1, self.current_deck, self.refresh)
-        self.stats_frame.frame.grid(row=0, column=0, sticky=N+E+W+S)
+        self.stats_frame.grid(row=0, column=0, sticky=N+E+W+S)
 
     def adjust_widgets(self):
         self.add_deck_button.grid(row=0, column=0, columnspan=2, sticky=W+E)

@@ -11,31 +11,31 @@ from sv_tracker.gui.graphs.first_breakdown_frame import FirstBreakdownFrame
 from sv_tracker.gui.graphs.second_breakdown_frame import SecondBreakdownFrame
 
 
-class StatsFrame:
+class StatsFrame(Frame):
     def __init__(self, master, deck, refresh):
         self.deck = deck
         self.refresh = refresh
 
-        self.frame = Frame(master, width=320, height=500, padx=5, pady=5)
+        super().__init__(master, width=320, height=500, padx=5, pady=5)
 
         self.class_icon = ClassIcons().get_icon(self.deck.clan())
         self.resized_image = self.class_icon.resize((50, 50))
         self.tk_image = ImageTk.PhotoImage(self.resized_image)
-        self.deck_name_label = Label(self.frame, image=self.tk_image, text=self.deck.name, bg="black",
+        self.deck_name_label = Label(self, image=self.tk_image, text=self.deck.name, bg="black",
                                      fg="white", compound=RIGHT, anchor=E, font="Sans 12 bold")
 
         self.edit_window = None
         self.edit_matches_frame = None
-        self.edit_matches = ttk.Button(self.frame, text="EDIT MATCHES", command=self.edit)
+        self.edit_matches = ttk.Button(self, text="EDIT MATCHES", command=self.edit)
 
-        self.figures_notebook = ttk.Notebook(self.frame)
+        self.figures_notebook = ttk.Notebook(self)
         self.match_breakdown_frame = MatchBreakdownFrame(self.figures_notebook, self.deck)
         self.wins_breakdown_frame = WinsBreakdownFrame(self.figures_notebook, self.deck)
         self.losses_breakdown_frame = LossesBreakdownFrame(self.figures_notebook, self.deck)
         self.first_breakdown_frame = FirstBreakdownFrame(self.figures_notebook, self.deck)
         self.second_breakdown_frame = SecondBreakdownFrame(self.figures_notebook, self.deck)
 
-        self.match_history_frame = MatchHistoryFrame(self.frame, self.deck)
+        self.match_history_frame = MatchHistoryFrame(self, self.deck)
 
         self.adjust_widgets()
 
@@ -43,7 +43,6 @@ class StatsFrame:
         self.edit_window = Toplevel()
         self.edit_matches_frame = EditMatchesFrame(self.edit_window, self.deck, self.refresh)
         self.edit_matches_frame.pack()
-
 
     def adjust_widgets(self):
         self.deck_name_label.grid(row=0, column=0, sticky=E+W)
@@ -75,3 +74,5 @@ class StatsFrame:
         self.losses_breakdown_frame.destroy()
         self.first_breakdown_frame.destroy()
         self.second_breakdown_frame.destroy()
+
+        super().destroy()
