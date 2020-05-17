@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 from PIL import ImageTk
 from sv_tracker.class_icons import ClassIcons
 from sv_tracker.gui.graphs.cost_breakdown_frame import CostBreakdownFrame
@@ -32,7 +33,11 @@ class DeckListFrame(Frame):
 
     def _fill_cards_frame(self):
         card_counts = self.deck.card_counts()
-        cards = self.deck.cards()
+        try:
+            cards = self.deck.cards()
+        except ValueError:
+            messagebox.showinfo('Missing Cards', 'Missing cards. Please update your card database.')
+            return
 
         for index, card_id in enumerate(card_counts):
             card = CardImageFrame(self.cards_frame, cards[card_id], card_counts[card_id])
