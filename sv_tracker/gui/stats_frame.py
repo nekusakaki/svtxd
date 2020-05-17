@@ -47,7 +47,7 @@ class StatsFrame(Frame):
     def adjust_widgets(self):
         self.deck_name_label.grid(row=0, column=0, sticky=E+W)
 
-        self.match_breakdown_frame.frame.pack(fill=BOTH, expand=True)
+        self.match_breakdown_frame.pack(fill=BOTH, expand=True)
         self.wins_breakdown_frame.frame.pack(fill=BOTH, expand=True)
         self.losses_breakdown_frame.pack(fill=BOTH, expand=True)
         self.first_breakdown_frame.pack(fill=BOTH, expand=True)
@@ -56,7 +56,7 @@ class StatsFrame(Frame):
         self.match_history_frame.grid(row=2, column=0, sticky=N+E+W+S, pady=5)
 
         self.figures_notebook.grid(row=1, column=0, sticky=E+W, pady=5)
-        self.figures_notebook.add(self.match_breakdown_frame.frame, text='Opponents')
+        self.figures_notebook.add(self.match_breakdown_frame, text='Opponents')
         self.figures_notebook.add(self.wins_breakdown_frame.frame, text='Wins')
         self.figures_notebook.add(self.losses_breakdown_frame, text='Losses')
         self.figures_notebook.add(self.first_breakdown_frame, text='First')
