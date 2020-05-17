@@ -1,14 +1,13 @@
 from tkinter import *
-import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import sv_tracker.helper_functions as hf
 
 
-class CostBreakdownFrame:
-    def __init__(self, parent, decklist):
-        self.cost_breakdown = decklist.cost_breakdown()
-        self.frame = Frame(parent, width=150, height=150)
+class CostBreakdownFrame(Frame):
+    def __init__(self, master, deck):
+        self.cost_breakdown = deck.cost_breakdown()
+        super().__init__(master, width=150, height=150)
         self.cost_chart = self.generate_graph()
 
     def generate_graph(self):
@@ -37,19 +36,20 @@ class CostBreakdownFrame:
         ax.spines["top"].set_visible(False)
         ax.spines["left"].set_visible(False)
         ax.spines["right"].set_visible(False)
-        background_color = hf.rgb_to_hex(self.frame.winfo_rgb(self.frame['bg']))
+        background_color = hf.rgb_to_hex(self.winfo_rgb(self['bg']))
         fig.legend()
         ax.set_facecolor(background_color)
         ax.set_title('Cost Breakdown')
 
         fig.patch.set_facecolor(background_color)
 
-        cost_chart = FigureCanvasTkAgg(fig, self.frame)
+        cost_chart = FigureCanvasTkAgg(fig, self)
         cost_chart.get_tk_widget().pack(fill=BOTH)
         return cost_chart
 
     def resize(self, event):
-        self.frame.configure(width=event.width, height=event.width)
+        self.configure(width=event.width, height=event.width)
 
     def destroy(self):
         plt.close(self.cost_chart.figure)
+        super().destroy()

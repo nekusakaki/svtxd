@@ -52,7 +52,7 @@ class DeckListFrame(Frame):
         self.cards_canvas.bind('<Leave>', self.unbind_mousewheel)
         self.cards_canvas.bind('<Configure>', self.resize)
 
-        self.cost_breakdown_frame.frame.grid(row=2, column=0, columnspan=2, sticky=W+E+N+S)
+        self.cost_breakdown_frame.grid(row=2, column=0, columnspan=2, sticky=W+E+N+S)
 
         self.columnconfigure(0, weight=1)
 
@@ -70,7 +70,7 @@ class DeckListFrame(Frame):
         self.resize_card_images(scale)
         self.cards_frame.configure(width=event.width, height=self.cards_frame.winfo_reqheight())
         canvas_height = self.height - \
-                        (self.deck_name_label.winfo_height() + self.cost_breakdown_frame.frame.winfo_height()) - \
+                        (self.deck_name_label.winfo_height() + self.cost_breakdown_frame.winfo_height()) - \
                         24
         self.cards_canvas.configure(height=canvas_height)
         self.resize_cards_canvas(scale)
