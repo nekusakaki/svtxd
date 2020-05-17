@@ -8,33 +8,33 @@ from sv_tracker.gui.change_count_frame import ChangeCountFrame
 from sv_tracker.gui.log_match_frame import LogMatchFrame
 
 
-class DeckTrackerFrame:
+class DeckTrackerFrame(Frame):
     def __init__(self, master, deck, refresh_function, save_deck_function):
         self.deck = deck
         self.tracked_deck = TrackedDeck(self.deck)
         self.refresh_function = refresh_function
         self.save_deck_function = save_deck_function
 
-        self.frame = Frame(master, pady=5)
-        self.cards_frame = Frame(self.frame, padx=5, pady=0)
+        super().__init__(master, pady=5)
+        self.cards_frame = Frame(self, padx=5, pady=0)
         self.cards = {}
         self.counter_buttons = {}
 
-        self.stop_watch_frame = StopwatchFrame(self.frame)
-        self.turn_timer_frame = TurnTimerFrame(self.frame)
+        self.stop_watch_frame = StopwatchFrame(self)
+        self.turn_timer_frame = TurnTimerFrame(self)
 
-        self.reset_button = ttk.Button(self.frame, text='RESET DECK', command=self.reset)
+        self.reset_button = ttk.Button(self, text='RESET DECK', command=self.reset)
 
         self.log_match_window = None
         self.log_match_frame = None
-        self.log_match_button = ttk.Button(self.frame, text='Log Match', command=self.log_match_popup)
+        self.log_match_button = ttk.Button(self, text='Log Match', command=self.log_match_popup)
 
         self.fill_cards_frame()
         self.adjust_widgets()
 
     def log_match_popup(self):
         self.log_match_window = Toplevel()
-        self.log_match_window.transient(self.frame)
+        self.log_match_window.transient(self)
 
         self.log_match_frame = LogMatchFrame(self.log_match_window, self.stop_watch_frame, self.log_match)
         self.log_match_frame.frame.pack()

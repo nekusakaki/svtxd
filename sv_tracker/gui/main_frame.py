@@ -77,8 +77,8 @@ class MainFrame:
         self.deck_tracker.focus_set()
 
         self.deck_tracker_frame = DeckTrackerFrame(self.deck_tracker, self.current_deck, self.refresh, self.save_deck)
-        self.deck_tracker_frame.frame.pack(fill=BOTH, expand=TRUE)
-        self.deck_tracker_frame.frame.bind('<Configure>', self.deck_tracker_frame.resize)
+        self.deck_tracker_frame.pack(fill=BOTH, expand=TRUE)
+        self.deck_tracker_frame.bind('<Configure>', self.deck_tracker_frame.resize)
 
     def add_deck_popup(self):
         if self.add_popup:
