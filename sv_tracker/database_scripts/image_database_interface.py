@@ -1,6 +1,8 @@
 import sqlite3
 import io
 
+IMAGE_DATABASE_PATH = 'database/card_image_database.db'
+
 
 class ImageDatabaseInterface:
     CARD_ID = 0
@@ -13,7 +15,7 @@ class ImageDatabaseInterface:
         return cls._instance
 
     def __init__(self):
-        self._conn = sqlite3.connect('database/card_image_database.db')
+        self._conn = sqlite3.connect(IMAGE_DATABASE_PATH)
         self._c = self._conn.cursor()
 
     def __del__(self):
