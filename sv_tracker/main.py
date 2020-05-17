@@ -10,7 +10,7 @@ def main():
     root.title("SV Deck Tracker XD")
 
     main_frame = MainFrame(root)
-    main_frame.frame.pack()
+    main_frame.pack()
 
     root.resizable(width=False, height=False)
 

@@ -13,7 +13,7 @@ from sv_tracker.gui.deck_tracker_frame import DeckTrackerFrame
 DECK_FOLDER = 'decks/'
 
 
-class MainFrame:
+class MainFrame(Frame):
     def __init__(self, master):
         master.withdraw()
         self.splash_screen = SplashScreen(master)
@@ -24,20 +24,20 @@ class MainFrame:
         self.current_clan = 'All'
         self.current_deck = None
 
-        self.frame = Frame(master, width=715, height=577)
-        self.add_deck_button = ttk.Button(self.frame, text="ADD DECK", command=self.add_deck_popup)
-        self.sort_buttons_frame = Frame(self.frame)
-        self.decks_canvas = Canvas(self.frame, width=300, scrollregion=(0, 0, 300, 500), highlightthickness=0)
+        super().__init__(master, width=715, height=577)
+        self.add_deck_button = ttk.Button(self, text="ADD DECK", command=self.add_deck_popup)
+        self.sort_buttons_frame = Frame(self)
+        self.decks_canvas = Canvas(self, width=300, scrollregion=(0, 0, 300, 500), highlightthickness=0)
         self.decks_frame = Frame(self.decks_canvas, height=500, bd=0, borderwidth=0)
-        self.vbar = ttk.Scrollbar(self.frame, orient=VERTICAL)
+        self.vbar = ttk.Scrollbar(self, orient=VERTICAL)
 
         self.add_popup = None
 
-        self.start_button = ttk.Button(self.frame, text="START DECK TRACKER", command=self.start)
+        self.start_button = ttk.Button(self, text="START DECK TRACKER", command=self.start)
         self.deck_tracker = None
         self.deck_tracker_frame = None
 
-        self.deck_notebook = ttk.Notebook(self.frame)
+        self.deck_notebook = ttk.Notebook(self)
         self.tab_frame_0 = Frame(self.deck_notebook, width=320, height=500)
         self.tab_frame_1 = Frame(self.deck_notebook, width=320, height=500)
         self.deck_list_frame = Frame(self.tab_frame_0, width=320, height=500)
@@ -254,13 +254,14 @@ class MainFrame:
         self.deck_notebook.add(self.tab_frame_0, text='Decklist')
         self.deck_notebook.add(self.tab_frame_1, text='Match Statistics')
 
-        self.frame.rowconfigure(0, weight=0)
-        self.frame.rowconfigure(1, weight=0)
-        self.frame.rowconfigure(2, weight=1)
+        self.rowconfigure(0, weight=0)
+        self.rowconfigure(1, weight=0)
+        self.rowconfigure(2, weight=1)
 
-        self.frame.columnconfigure(0, weight=1)
-        self.frame.columnconfigure(1, weight=0)
-        self.frame.grid_propagate(False)
+        self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=0)
+
+        self.grid_propagate(False)
 
     def bind_mousewheel(self, event):
         self.decks_canvas.bind_all('<MouseWheel>', self.on_mousewheel)
