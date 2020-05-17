@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 from sv_tracker.tracked_deck import TrackedDeck
 from sv_tracker.gui.card_image_frame import CardImageFrame
 from sv_tracker.gui.turn_timer_frame import TurnTimerFrame
@@ -56,7 +57,11 @@ class DeckTrackerFrame(Frame):
 
     def fill_cards_frame(self):
         card_counts = self.tracked_deck.current_card_counts()
-        cards = self.deck.cards()
+        try:
+            cards = self.deck.cards()
+        except ValueError:
+            messagebox.showinfo('Missing Cards', 'Missing cards. Please update your card database.')
+            return
 
         for index, card_id in enumerate(card_counts):
             card = CardImageFrame(self.cards_frame, cards[card_id], card_counts[card_id])
