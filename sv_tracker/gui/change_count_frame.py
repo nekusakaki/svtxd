@@ -2,24 +2,24 @@ from tkinter import *
 from PIL import Image, ImageTk
 
 
-class ChangeCountFrame:
+class ChangeCountFrame(Frame):
     def __init__(self, master, card_id, inc_function, dec_function):
         self.card_id = card_id
         self.inc_function = inc_function
         self.dec_function = dec_function
 
-        self.frame = Frame(master)
+        super().__init__(master)
 
         self.plus_img = Image.open('images/plus.png')
         self.resized_plus = self.plus_img.resize((50, 50))
         self.tk_plus = ImageTk.PhotoImage(self.resized_plus)
-        self.inc_button = Button(self.frame, image=self.tk_plus, borderwidth=0,
+        self.inc_button = Button(self, image=self.tk_plus, borderwidth=0,
                                  command=self.increment_count)
 
         self.minus_img = Image.open('images/minus.png')
         self.resized_minus = self.minus_img.resize((50, 50))
         self.tk_minus = ImageTk.PhotoImage(self.resized_minus)
-        self.dec_button = Button(self.frame, image=self.tk_minus, borderwidth=0,
+        self.dec_button = Button(self, image=self.tk_minus, borderwidth=0,
                                  command=self.decrement_count)
 
         self.adjust_widgets()

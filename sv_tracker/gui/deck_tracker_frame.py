@@ -65,7 +65,7 @@ class DeckTrackerFrame:
 
             counter_button = ChangeCountFrame(self.cards_frame, card_id,
                                               self.increment_card, self.decrement_card)
-            counter_button.frame.grid(row=index, column=1, sticky=N+S, padx=5)
+            counter_button.grid(row=index, column=1, sticky=N+S, padx=5)
             self.counter_buttons[card_id] = counter_button
 
     def increment_card(self, card_id):
