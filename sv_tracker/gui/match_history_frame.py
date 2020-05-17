@@ -2,12 +2,12 @@ from tkinter import *
 from sv_tracker.gui.match_frame import MatchFrame
 
 
-class MatchHistoryFrame:
+class MatchHistoryFrame(Frame):
     def __init__(self, master, deck):
         self.deck = deck
-        self.frame = Frame(master, width=300, height=150)
-        self.canvas = Canvas(self.frame, width=300, height=150, scrollregion=(0, 0, 320, 500))
-        self.vbar = Scrollbar(self.frame, orient=VERTICAL)
+        super().__init__(master)
+        self.canvas = Canvas(self, width=300, height=150, scrollregion=(0, 0, 320, 500))
+        self.vbar = Scrollbar(self, orient=VERTICAL)
         self.matches_frame = Frame(self.canvas, width=300)
         self.matches = []
 
@@ -32,7 +32,7 @@ class MatchHistoryFrame:
         self.canvas.bind('<Enter>', self.bind_mousewheel)
         self.canvas.bind('<Leave>', self.unbind_mousewheel)
 
-        self.frame.bind('<Configure>', self.resize)
+        self.bind('<Configure>', self.resize)
 
     def resize(self, event):
         self.canvas.configure(scrollregion=self.canvas.bbox('all'))

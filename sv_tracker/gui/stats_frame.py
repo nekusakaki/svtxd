@@ -54,7 +54,7 @@ class StatsFrame:
         self.first_breakdown_frame.frame.pack(fill=BOTH, expand=True)
         self.second_breakdown_frame.frame.pack(fill=BOTH, expand=True)
 
-        self.match_history_frame.frame.grid(row=2, column=0, sticky=N+E+W+S, pady=5)
+        self.match_history_frame.grid(row=2, column=0, sticky=N+E+W+S, pady=5)
 
         self.figures_notebook.grid(row=1, column=0, sticky=E+W, pady=5)
         self.figures_notebook.add(self.match_breakdown_frame.frame, text='Opponents')
