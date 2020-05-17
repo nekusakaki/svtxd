@@ -5,28 +5,28 @@ from sv_tracker.gui.graphs.cost_breakdown_frame import CostBreakdownFrame
 from sv_tracker.gui.card_image_frame import CardImageFrame
 
 
-class DeckListFrame:
-    def __init__(self, parent, deck):
+class DeckListFrame(Frame):
+    def __init__(self, master, deck):
         self.deck = deck
         self.height = 500
-        self.frame = Frame(parent, height=self.height, padx=5, pady=5)
+        super().__init__(master, padx=5, pady=5)
 
         self.class_icon = ClassIcons().get_icon(self.deck.clan())
         self.resized_image = self.class_icon.resize((50, 50))
         self.tk_image = ImageTk.PhotoImage(self.resized_image)
-        self.deck_name_label = self._generate_deck_name_label(self.frame)
+        self.deck_name_label = self._generate_deck_name_label(self)
 
-        self.cards_canvas = Canvas(self.frame, width=300)
+        self.cards_canvas = Canvas(self, width=300)
         self.cards_frame = Frame(self.cards_canvas, height=1000, bd=0)
-        self.vbar = Scrollbar(self.frame, orient=VERTICAL)
-        self.cost_breakdown_frame = CostBreakdownFrame(self.frame, deck)
+        self.vbar = Scrollbar(self, orient=VERTICAL)
+        self.cost_breakdown_frame = CostBreakdownFrame(self, deck)
         self.cards = {}
 
         self._fill_cards_frame()
         self._adjust_widgets()
 
-    def _generate_deck_name_label(self, parent):
-        label = Label(parent, image=self.tk_image, text=self.deck.name, bg="black", fg="white",
+    def _generate_deck_name_label(self, master):
+        label = Label(master, image=self.tk_image, text=self.deck.name, bg="black", fg="white",
                       compound=RIGHT, anchor=E, font="Sans 12 bold")
         return label
 
@@ -54,7 +54,7 @@ class DeckListFrame:
 
         self.cost_breakdown_frame.frame.grid(row=2, column=0, columnspan=2, sticky=W+E+N+S)
 
-        self.frame.columnconfigure(0, weight=1)
+        self.columnconfigure(0, weight=1)
 
     def bind_mousewheel(self, event):
         self.cards_canvas.bind_all('<MouseWheel>', self.on_mousewheel)
@@ -88,3 +88,4 @@ class DeckListFrame:
 
     def destroy(self):
         self.cost_breakdown_frame.destroy()
+        super().destroy()

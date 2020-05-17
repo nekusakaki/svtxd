@@ -219,7 +219,7 @@ class MainFrame:
 
     def preview_deck(self):
         self.deck_list_frame = DeckListFrame(self.tab_frame_0, self.current_deck)
-        self.deck_list_frame.frame.grid(row=0, column=0, sticky=N+E+W+S)
+        self.deck_list_frame.grid(row=0, column=0, sticky=N+E+W+S)
 
     def preview_stats(self):
         self.stats_frame = StatsFrame(self.tab_frame_1, self.current_deck, self.refresh)
