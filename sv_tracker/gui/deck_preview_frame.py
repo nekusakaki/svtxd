@@ -4,7 +4,7 @@ from PIL import ImageTk
 from sv_tracker.class_icons import ClassIcons
 
 
-class DeckPreviewFrame:
+class DeckPreviewFrame(Frame):
     def __init__(self, master, deck, function):
         self.deck = deck
 
@@ -14,10 +14,10 @@ class DeckPreviewFrame:
         self.resized_image = self.class_icon.resize((50, 50))
         self.tk_image = ImageTk.PhotoImage(self.resized_image)
 
-        self.frame = Frame(master)
-        self.icon_label = Label(self.frame, image=self.tk_image)
-        self.deck_name_label = Label(self.frame, text=self.deck.name, anchor=W, font="Arial 14")
-        self.stats_label = self.generate_stats_label(self.frame)
+        super().__init__(master)
+        self.icon_label = Label(self, image=self.tk_image)
+        self.deck_name_label = Label(self, text=self.deck.name, anchor=W, font="Arial 14")
+        self.stats_label = self.generate_stats_label(self)
 
         self.adjust_widgets()
 
@@ -39,14 +39,14 @@ class DeckPreviewFrame:
         self.deck_name_label.grid(row=0, column=1, sticky=E+W, padx=10)
         self.stats_label.grid(row=1, column=1, sticky=E+W, padx=10)
 
-        self.frame.bind('<Enter>', self.bind_left_click)
-        self.frame.bind('<Leave>', self.unbind_left_click)
+        self.bind('<Enter>', self.bind_left_click)
+        self.bind('<Leave>', self.unbind_left_click)
 
     def bind_left_click(self, event):
-        self.frame.bind_all('<Button-1>', self.view_deck)
+        self.bind_all('<Button-1>', self.view_deck)
 
     def unbind_left_click(self, event):
-        self.frame.unbind_all('<Button-1>')
+        self.unbind_all('<Button-1>')
 
     def select(self):
         class_color = {
@@ -62,13 +62,13 @@ class DeckPreviewFrame:
 
         bg_color = class_color.get(self.deck.clan())
 
-        self.frame.config(bg=bg_color)
+        self.config(bg=bg_color)
         self.icon_label.config(bg=bg_color)
         self.deck_name_label.config(bg=bg_color, fg='white')
         self.stats_label.config(bg=bg_color, fg='white')
 
     def deselect(self):
-        self.frame.config(bg=self.frame.master['bg'])
-        self.icon_label.config(bg=self.frame['bg'])
-        self.deck_name_label.config(bg=self.frame['bg'], fg='black')
-        self.stats_label.config(bg=self.frame['bg'], fg='black')
+        self.config(bg=self.master['bg'])
+        self.icon_label.config(bg=self['bg'])
+        self.deck_name_label.config(bg=self['bg'], fg='black')
+        self.stats_label.config(bg=self['bg'], fg='black')

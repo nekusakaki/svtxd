@@ -195,7 +195,7 @@ class MainFrame:
     def fill_decks_frame(self):
         for deck in self.displayed_decks:
             deck_preview = self.deck_previews[deck]
-            deck_preview.frame.pack(side=TOP, fill=X, expand=TRUE, padx=5, pady=5)
+            deck_preview.pack(side=TOP, fill=X, expand=TRUE, padx=5, pady=5)
 
     def view_deck(self, deck):
         if deck == self.current_deck:
