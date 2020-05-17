@@ -81,7 +81,7 @@ class DeckTrackerFrame(Frame):
         self.cards_frame.grid(row=1, column=0, columnspan=2)
 
         self.stop_watch_frame.grid(row=2, column=0, padx=5, pady=5, sticky=N+E+W+S)
-        self.turn_timer_frame.frame.grid(row=2, column=1, rowspan=2, padx=5, pady=5, sticky=N+E+W+S)
+        self.turn_timer_frame.grid(row=2, column=1, rowspan=2, padx=5, pady=5, sticky=N+E+W+S)
 
         self.log_match_button.grid(row=3, column=0, sticky=N+E+W+S, padx=5)
 

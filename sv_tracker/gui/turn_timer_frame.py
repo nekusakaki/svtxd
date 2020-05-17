@@ -1,7 +1,7 @@
 from tkinter import *
 
 
-class TurnTimerFrame:
+class TurnTimerFrame(Frame):
     TURN_SECONDS = 90
 
     def __init__(self, master):
@@ -9,12 +9,12 @@ class TurnTimerFrame:
 
         self.job = None
 
-        self.frame = Frame(master)
-        self.time_label = Label(self.frame, text=self.seconds, font='times 20')
+        super().__init__(master)
+        self.time_label = Label(self, text=self.seconds, font='times 20')
 
-        self.start_button = Button(self.frame, text='START', command=self.start)
-        self.stop_button = Button(self.frame, text='STOP', command=self.stop)
-        self.restart_button = Button(self.frame, text='RESTART', command=self.restart)
+        self.start_button = Button(self, text='START', command=self.start)
+        self.stop_button = Button(self, text='STOP', command=self.stop)
+        self.restart_button = Button(self, text='RESTART', command=self.restart)
 
         self.adjust_widgets()
 
@@ -51,5 +51,5 @@ class TurnTimerFrame:
         self.stop_button.grid(row=2, column=0, sticky=N+E+W+S)
         self.restart_button.grid(row=1, column=1, rowspan=2, sticky=N+E+W+S)
 
-        self.frame.columnconfigure(0, weight=1)
-        self.frame.columnconfigure(1, weight=1)
+        self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=1)
