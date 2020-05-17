@@ -9,6 +9,7 @@ from sv_tracker.gui.deck_preview_frame import DeckPreviewFrame
 from sv_tracker.gui.add_deck_frame import AddDeckFrame
 from sv_tracker.gui.stats_frame import StatsFrame
 from sv_tracker.gui.deck_tracker_frame import DeckTrackerFrame
+from sv_tracker.gui.database_frame import DatabaseFrame
 
 DECK_FOLDER = 'decks/'
 
@@ -24,6 +25,14 @@ class MainFrame(Frame):
         self.current_clan = 'All'
         self.current_deck = None
 
+        self.menu = Menu(master)
+        master.config(menu=self.menu)
+
+        self.database_menu = Menu(self.menu, tearoff=0)
+        self.menu.add_cascade(label='Database', menu=self.database_menu)
+        self.database_menu.add_command(label='Generate Databases',
+                                       command=self.generate_database_popup)
+
         super().__init__(master, width=715, height=577)
         self.add_deck_button = ttk.Button(self, text="ADD DECK", command=self.add_deck_popup)
         self.sort_buttons_frame = Frame(self)
@@ -32,6 +41,7 @@ class MainFrame(Frame):
         self.vbar = ttk.Scrollbar(self, orient=VERTICAL)
 
         self.add_popup = None
+        self.database_popup = None
 
         self.start_button = ttk.Button(self, text="START DECK TRACKER", command=self.start)
         self.deck_tracker = None
@@ -79,6 +89,17 @@ class MainFrame(Frame):
         self.deck_tracker_frame = DeckTrackerFrame(self.deck_tracker, self.current_deck, self.refresh, self.save_deck)
         self.deck_tracker_frame.pack(fill=BOTH, expand=TRUE)
         self.deck_tracker_frame.bind('<Configure>', self.deck_tracker_frame.resize)
+
+    def generate_database_popup(self):
+        if self.database_popup:
+            self.database_popup.destroy()
+
+        self.database_popup = Toplevel()
+        self.database_popup.wm_transient(self.master)
+        self.database_popup.resizable(width=False, height=False)
+        database_frame = DatabaseFrame(self.database_popup)
+        database_frame.pack()
+        self.database_popup.focus_set()
 
     def add_deck_popup(self):
         if self.add_popup:
