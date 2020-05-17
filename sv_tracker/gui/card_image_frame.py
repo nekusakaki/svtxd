@@ -1,6 +1,6 @@
 from tkinter import *
-from database_scripts.image_database_interface import ImageDatabaseInterface
 from PIL import ImageTk, Image
+from sv_tracker.database_scripts.image_database_interface import ImageDatabaseInterface
 
 
 class CardImageFrame:
