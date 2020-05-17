@@ -4,16 +4,16 @@ from tkinter import ttk
 from sv_tracker.deck import Deck
 
 
-class AddDeckFrame:
+class AddDeckFrame(Frame):
     def __init__(self, master, function):
         self.add_deck_function = function
 
-        self.frame = Frame(master)
-        self.deck_name_label = ttk.Label(self.frame, text="Deck Name: ")
-        self.deck_name_entry = ttk.Entry(self.frame, width=30)
-        self.deck_code_label = ttk.Label(self.frame, text="Deck Code: ")
-        self.deck_code_entry = ttk.Entry(self.frame, width=5)
-        self.enter_button = ttk.Button(self.frame, text='Enter', command=self.add_deck)
+        super().__init__(master)
+        self.deck_name_label = ttk.Label(self, text="Deck Name: ")
+        self.deck_name_entry = ttk.Entry(self, width=30)
+        self.deck_code_label = ttk.Label(self, text="Deck Code: ")
+        self.deck_code_entry = ttk.Entry(self, width=5)
+        self.enter_button = ttk.Button(self, text='Enter', command=self.add_deck)
 
         self.adjust_widgets()
 
@@ -41,8 +41,8 @@ class AddDeckFrame:
             self.add_deck_function(deck)
 
     def return_focus(self):
-        self.frame.master.lift()
-        self.frame.master.focus_force()
+        self.master.lift()
+        self.master.focus_force()
 
     def adjust_widgets(self):
         self.deck_name_label.grid(row=0, column=0)
@@ -55,14 +55,14 @@ class AddDeckFrame:
 
         self.enter_button.grid(row=2, column=0, columnspan=2)
 
-        self.frame.bind('<FocusIn>', self.handle_focus)
-        self.frame.bind('<FocusOut>', self.handle_unfocus)
+        self.bind('<FocusIn>', self.handle_focus)
+        self.bind('<FocusOut>', self.handle_unfocus)
 
     def handle_focus(self, event):
-        self.frame.bind_all('<Return>', self.enter_pressed)
+        self.bind_all('<Return>', self.enter_pressed)
 
     def enter_pressed(self, event):
         self.add_deck()
 
     def handle_unfocus(self, event):
-        self.frame.unbind_all('<Return>')
+        self.unbind_all('<Return>')

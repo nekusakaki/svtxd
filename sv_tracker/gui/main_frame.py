@@ -86,7 +86,7 @@ class MainFrame:
 
         self.add_popup = Toplevel()
         add_deck_frame = AddDeckFrame(self.add_popup, self.add_deck)
-        add_deck_frame.frame.pack()
+        add_deck_frame.pack()
         self.add_popup.focus_set()
 
     def add_deck(self, deck):
