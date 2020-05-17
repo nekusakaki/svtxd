@@ -127,6 +127,19 @@ class MainFrame(Frame):
 
         deck.save_to_file(DECK_FOLDER)
 
+    def delete_deck(self, deck):
+        deck.delete_from_folder(DECK_FOLDER)
+        if self.current_deck == deck:
+            self.current_deck = None
+
+        self.decks.remove(deck)
+        self.deck_previews.pop(deck)
+        self.decks_sorted = self.sort_decks()
+
+        self.show_clan_decks(self.current_clan)
+
+        self.refresh()
+
     def load_decks(self, folder_path):
         decks = []
         deck_paths = []
@@ -206,12 +219,17 @@ class MainFrame(Frame):
         self.current_deck = None
         if deck is not None:
             self.view_deck(deck)
+        else:
+            for child in self.tab_frame_0.winfo_children():
+                child.destroy()
+            for child in self.tab_frame_1.winfo_children():
+                child.destroy()
 
     def generate_deck_previews(self):
         self.deck_previews.clear()
 
         for deck in self.decks:
-            self.deck_previews[deck] = DeckPreviewFrame(self.decks_frame, deck, self.view_deck)
+            self.deck_previews[deck] = DeckPreviewFrame(self.decks_frame, deck, self.view_deck, self.delete_deck)
 
     def fill_decks_frame(self):
         for deck in self.displayed_decks:
@@ -272,7 +290,7 @@ class MainFrame(Frame):
 
         self.stats_frame.grid(row=0, column=0, sticky=N+E+W+S)
 
-        self.deck_notebook.add(self.tab_frame_0, text='Decklist')
+        self.deck_notebook.add(self.tab_frame_0, text='Deck List')
         self.deck_notebook.add(self.tab_frame_1, text='Match Statistics')
 
         self.rowconfigure(0, weight=0)

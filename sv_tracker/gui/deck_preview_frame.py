@@ -1,14 +1,15 @@
 from tkinter import *
-from tkinter import ttk
+from tkinter import messagebox
 from PIL import ImageTk
 from sv_tracker.class_icons import ClassIcons
 
 
 class DeckPreviewFrame(Frame):
-    def __init__(self, master, deck, function):
+    def __init__(self, master, deck, view_function, delete_function):
         self.deck = deck
 
-        self.function = function
+        self.view_function = view_function
+        self.delete_function = delete_function
 
         self.class_icon = ClassIcons().get_icon(self.deck.clan())
         self.resized_image = self.class_icon.resize((50, 50))
@@ -18,6 +19,9 @@ class DeckPreviewFrame(Frame):
         self.icon_label = Label(self, image=self.tk_image)
         self.deck_name_label = Label(self, text=self.deck.name, anchor=W, font="Arial 14")
         self.stats_label = self.generate_stats_label(self)
+
+        self.popup_menu = Menu(self, tearoff=0)
+        self.popup_menu.add_command(label='Delete Deck', command=self.delete_deck)
 
         self.adjust_widgets()
 
@@ -32,21 +36,33 @@ class DeckPreviewFrame(Frame):
         return label
 
     def view_deck(self, event):
-        self.function(self.deck)
+        self.view_function(self.deck)
+
+    def delete_deck(self):
+        confirm = messagebox.askyesno('Delete Deck',
+                                      'Are you sure you want to delete ' + self.deck.name + '?')
+
+        if confirm:
+            self.delete_function(self.deck)
 
     def adjust_widgets(self):
         self.icon_label.grid(row=0, column=0, rowspan=2, sticky=N+E+W+S)
         self.deck_name_label.grid(row=0, column=1, sticky=E+W, padx=10)
         self.stats_label.grid(row=1, column=1, sticky=E+W, padx=10)
 
-        self.bind('<Enter>', self.bind_left_click)
-        self.bind('<Leave>', self.unbind_left_click)
+        self.bind('<Enter>', self.bind_click)
+        self.bind('<Leave>', self.unbind_click)
 
-    def bind_left_click(self, event):
+    def bind_click(self, event):
         self.bind_all('<Button-1>', self.view_deck)
+        self.bind_all('<Button-3>', self.popup)
 
-    def unbind_left_click(self, event):
+    def popup(self, event):
+        self.popup_menu.post(event.x_root, event.y_root)
+
+    def unbind_click(self, event):
         self.unbind_all('<Button-1>')
+        self.unbind_all('<Button-3>')
 
     def select(self):
         class_color = {
