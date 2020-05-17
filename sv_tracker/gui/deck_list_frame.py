@@ -5,13 +5,13 @@ from sv_tracker.gui.graphs.cost_breakdown_frame import CostBreakdownFrame
 from sv_tracker.gui.card_image_frame import CardImageFrame
 
 
-class DecklistFrame:
-    def __init__(self, parent, decklist):
-        self.decklist = decklist
+class DeckListFrame:
+    def __init__(self, parent, deck):
+        self.deck = deck
         self.height = 500
         self.frame = Frame(parent, height=self.height, padx=5, pady=5)
 
-        self.class_icon = ClassIcons().get_icon(self.decklist.clan())
+        self.class_icon = ClassIcons().get_icon(self.deck.clan())
         self.resized_image = self.class_icon.resize((50, 50))
         self.tk_image = ImageTk.PhotoImage(self.resized_image)
         self.deck_name_label = self._generate_deck_name_label(self.frame)
@@ -19,24 +19,24 @@ class DecklistFrame:
         self.cards_canvas = Canvas(self.frame, width=300)
         self.cards_frame = Frame(self.cards_canvas, height=1000, bd=0)
         self.vbar = Scrollbar(self.frame, orient=VERTICAL)
-        self.cost_breakdown_frame = CostBreakdownFrame(self.frame, decklist)
+        self.cost_breakdown_frame = CostBreakdownFrame(self.frame, deck)
         self.cards = {}
 
         self._fill_cards_frame()
         self._adjust_widgets()
 
     def _generate_deck_name_label(self, parent):
-        label = Label(parent, image=self.tk_image, text=self.decklist.name, bg="black", fg="white",
+        label = Label(parent, image=self.tk_image, text=self.deck.name, bg="black", fg="white",
                       compound=RIGHT, anchor=E, font="Sans 12 bold")
         return label
 
     def _fill_cards_frame(self):
-        card_counts = self.decklist.card_counts()
-        cards = self.decklist.cards()
+        card_counts = self.deck.card_counts()
+        cards = self.deck.cards()
 
         for index, card_id in enumerate(card_counts):
             card = CardImageFrame(self.cards_frame, cards[card_id], card_counts[card_id])
-            card.frame.grid(row=index, column=0, sticky=W+E)
+            card.grid(row=index, column=0, sticky=W+E)
             self.cards[card_id] = card
 
     def _adjust_widgets(self):

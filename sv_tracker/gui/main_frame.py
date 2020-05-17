@@ -4,7 +4,7 @@ from tkinter import messagebox
 import os
 from sv_tracker.gui.splash_screen import SplashScreen
 from sv_tracker.deck import Deck
-from sv_tracker.gui.decklist_frame import DecklistFrame
+from sv_tracker.gui.deck_list_frame import DeckListFrame
 from sv_tracker.gui.deck_preview_frame import DeckPreviewFrame
 from sv_tracker.gui.add_deck_frame import AddDeckFrame
 from sv_tracker.gui.stats_frame import StatsFrame
@@ -40,7 +40,7 @@ class MainFrame:
         self.deck_notebook = ttk.Notebook(self.frame)
         self.tab_frame_0 = Frame(self.deck_notebook, width=320, height=500)
         self.tab_frame_1 = Frame(self.deck_notebook, width=320, height=500)
-        self.decklist_frame = Frame(self.tab_frame_0, width=320, height=500)
+        self.deck_list_frame = Frame(self.tab_frame_0, width=320, height=500)
         self.stats_frame = Frame(self.tab_frame_0, width=320, height=500)
 
         self.fill_sort_buttons_frame()
@@ -209,7 +209,7 @@ class MainFrame:
             for child in self.tab_frame_1.winfo_children():
                 child.destroy()
 
-        self.decklist_frame.destroy()
+        self.deck_list_frame.destroy()
         self.stats_frame.destroy()
 
         self.current_deck = deck
@@ -218,8 +218,8 @@ class MainFrame:
         self.preview_stats()
 
     def preview_deck(self):
-        self.decklist_frame = DecklistFrame(self.tab_frame_0, self.current_deck)
-        self.decklist_frame.frame.grid(row=0, column=0, sticky=N+E+W+S)
+        self.deck_list_frame = DeckListFrame(self.tab_frame_0, self.current_deck)
+        self.deck_list_frame.frame.grid(row=0, column=0, sticky=N+E+W+S)
 
     def preview_stats(self):
         self.stats_frame = StatsFrame(self.tab_frame_1, self.current_deck, self.refresh)
@@ -247,7 +247,7 @@ class MainFrame:
         self.tab_frame_0.pack(fill=BOTH, expand=True)
         self.tab_frame_1.pack(fill=BOTH, expand=True)
 
-        self.decklist_frame.grid(row=0, column=0, sticky=N+E+W+S)
+        self.deck_list_frame.grid(row=0, column=0, sticky=N+E+W+S)
 
         self.stats_frame.grid(row=0, column=0, sticky=N+E+W+S)
 

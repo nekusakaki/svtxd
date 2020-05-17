@@ -60,7 +60,7 @@ class DeckTrackerFrame:
 
         for index, card_id in enumerate(card_counts):
             card = CardImageFrame(self.cards_frame, cards[card_id], card_counts[card_id])
-            card.frame.grid(row=index, column=0, sticky=W + E)
+            card.grid(row=index, column=0, sticky=W + E)
             self.cards[card_id] = card
 
             counter_button = ChangeCountFrame(self.cards_frame, card_id,

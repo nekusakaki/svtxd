@@ -3,10 +3,10 @@ from PIL import ImageTk, Image
 from sv_tracker.database_scripts.image_database_interface import ImageDatabaseInterface
 
 
-class CardImageFrame:
+class CardImageFrame(Frame):
     START_SCALE = 0.65
 
-    def __init__(self, parent, card, count):
+    def __init__(self, master, card, count):
         image_db = ImageDatabaseInterface()
         self.card_img = Image.open(image_db.get_card_image(card.card_id))
         self.resized_img = self.card_img.resize((int(self.card_img.width*self.START_SCALE),
@@ -20,26 +20,22 @@ class CardImageFrame:
         self.current_count = count
         self.card_clan = card.clan
 
-        self.frame = self._generate_frame(parent)
-        self.canvas = self._generate_canvas(self.frame)
-        self.cost_frame = self._generate_cost_frame(self.frame)
+        super().__init__(master, bd=0)
+        self.canvas = self._generate_canvas(self)
+        self.cost_frame = self._generate_cost_frame(self)
         self.count_label = None
-        self.count_frame = self._generate_count_frame(self.frame)
+        self.count_frame = self._generate_count_frame(self)
 
         self._adjust_labels()
 
-    def _generate_frame(self, parent):
-        frame = Frame(parent, bd=0, borderwidth=0)
-        return frame
-
-    def _generate_canvas(self, parent):
-        canvas = Canvas(parent, width=self.tk_img.width(), height=self.tk_img.height(), bd=0)
+    def _generate_canvas(self, master):
+        canvas = Canvas(master, width=self.tk_img.width(), height=self.tk_img.height(), bd=0)
         canvas.create_image(2, 2, image=self.tk_img, anchor=NW)
         canvas.create_text(10, self.tk_img.height()/2, text=self.card_name, anchor=W,
                            fill="white")
         return canvas
 
-    def _generate_cost_frame(self, parent):
+    def _generate_cost_frame(self, master):
         height = self.tk_img.height()
         width = height
 
@@ -55,15 +51,15 @@ class CardImageFrame:
             8: '#41ACE1',
         }
 
-        frame = Frame(parent, width=width, height=height, bg=class_color[self.card_clan], bd=0)
+        frame = Frame(master, width=width, height=height, bg=class_color[self.card_clan], bd=0)
         label = Label(frame, bg=frame['bg'], text=self.cost, bd=0, fg="white", font="times 12 bold")
         label.place(relx=0.5, rely=0.5, x=0, y=0, anchor="center")
         return frame
 
-    def _generate_count_frame(self, parent):
+    def _generate_count_frame(self, master):
         height = self.tk_img.height()
         width = height
-        frame = Frame(parent, width=width, height=height, bg="black", bd=0)
+        frame = Frame(master, width=width, height=height, bg="black", bd=0)
         label = Label(frame, bg=frame['bg'], text='x' + str(self.current_count), bd=0, fg="white",
                       font="fira 10 bold")
         label.place(relx=0.5, rely=0.5, x=0, y=0, anchor="center")
