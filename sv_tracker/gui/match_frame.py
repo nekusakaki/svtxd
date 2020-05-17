@@ -5,22 +5,22 @@ from sv_tracker.class_icons import ClassIcons
 FONT = 'times 14'
 
 
-class MatchFrame:
+class MatchFrame(Frame):
     def __init__(self, master, match):
         self.match = match
-        self.frame = Frame(master)
+        super().__init__(master)
 
         self.clan_icon = None
         self.tk_image = None
         self.clan_label = self.generate_clan_label()
 
-        self.first_label = Label(self.frame, width=9, font=FONT)
-        self.won_label = Label(self.frame, width=5, font=FONT)
+        self.first_label = Label(self, width=9, font=FONT)
+        self.won_label = Label(self, width=5, font=FONT)
 
         minutes = int(self.match['duration'] / 60)
         seconds = int(self.match['duration'] % 60)
         duration_text = str(minutes) + 'm ' + str(seconds) + 's'
-        self.duration_label = Label(self.frame, text=duration_text, width=10, font=FONT)
+        self.duration_label = Label(self, text=duration_text, width=10, font=FONT)
 
         if self.match['first']:
             self.first_label.configure(text="FIRST")
@@ -49,7 +49,7 @@ class MatchFrame:
         img_copy = self.clan_icon.resize((25, 25))
         self.tk_image = ImageTk.PhotoImage(img_copy)
 
-        label = Label(self.frame, image=self.tk_image)
+        label = Label(self, image=self.tk_image)
         return label
 
     def adjust_widgets(self):

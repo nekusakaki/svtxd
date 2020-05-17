@@ -19,7 +19,7 @@ class MatchHistoryFrame:
 
         for index, match in enumerate(match_history):
             match_preview = MatchFrame(self.matches_frame, match)
-            match_preview.frame.grid(row=index, column=0, sticky=W+E, pady=5)
+            match_preview.grid(row=index, column=0, sticky=W+E, pady=5)
             self.matches.append(match_preview)
 
     def adjust_widgets(self):
