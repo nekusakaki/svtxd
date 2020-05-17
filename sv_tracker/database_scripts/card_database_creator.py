@@ -34,7 +34,7 @@ def create_card_database(print_function):
         try:
             os.remove(DATABASE_PATH)
         except OSError as e:
-            print('Error while deleting file', DATABASE_PATH)
+            print('Error while deleting file: ', DATABASE_PATH)
             print(e)
 
     conn = sqlite3.connect(DATABASE_PATH)

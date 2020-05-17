@@ -5,6 +5,7 @@ from urllib.request import urlopen
 from sv_tracker.card import Card
 import pickle
 import uuid
+import os
 
 
 class Deck:
@@ -48,12 +49,22 @@ class Deck:
         with open(file_path, 'rb') as input_file:
             return pickle.load(input_file)
 
-    def save_to_file(self, file_path):
+    def save_to_file(self, folder_path):
         self._cards.clear()
         file_name = self.name.replace(' ', '_') + '_' + self.uuid
-        full_path = file_path + file_name + '.deck'
+        full_path = folder_path + file_name + '.deck'
         with open(full_path, 'wb') as output_file:
             pickle.dump(self, output_file, pickle.HIGHEST_PROTOCOL)
+
+    def delete_from_folder(self, folder_path):
+        file_name = self.name.replace(' ', '_') + '_' + self.uuid
+        full_path = folder_path + file_name + '.deck'
+        if os.path.exists(full_path):
+            try:
+                os.remove(full_path)
+            except OSError as e:
+                print('Error while deleting file: ', full_path)
+                print(e)
 
     def rename(self, new_name):
         self.name = new_name
