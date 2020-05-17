@@ -20,7 +20,8 @@ class EditMatchesFrame(Frame):
         match_index = self.list_box.curselection()[0]
         self.delete_button.config(state=DISABLED)
 
-        confirm = messagebox.askyesno('Delete Match', 'Are you sure you want to delete this match?')
+        confirm = messagebox.askyesno('Delete Match', 'Are you sure you want to delete this match?' +
+                                      '\n' + self.list_box.get(ACTIVE))
 
         if not confirm:
             self.delete_button.config(state=NORMAL)
