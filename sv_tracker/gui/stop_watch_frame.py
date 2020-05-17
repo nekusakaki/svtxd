@@ -1,7 +1,7 @@
 from tkinter import *
 
 
-class StopwatchFrame:
+class StopwatchFrame(Frame):
     def __init__(self, master):
         self.seconds = 0
         self.duration = ''
@@ -9,12 +9,12 @@ class StopwatchFrame:
 
         self.job = None
 
-        self.frame = Frame(master)
-        self.time_label = Label(self.frame, text=self.duration, font='times 20')
+        super().__init__(master)
+        self.time_label = Label(self, text=self.duration, font='times 20')
 
-        self.start_button = Button(self.frame, text='START', command=self.start)
-        self.stop_button = Button(self.frame, text='STOP', command=self.stop)
-        self.reset_button = Button(self.frame, text='RESET', command=self.reset)
+        self.start_button = Button(self, text='START', command=self.start)
+        self.stop_button = Button(self, text='STOP', command=self.stop)
+        self.reset_button = Button(self, text='RESET', command=self.reset)
 
         self.adjust_widgets()
 
@@ -26,11 +26,11 @@ class StopwatchFrame:
         self.stop()
         return self.seconds
 
-    def countup(self):
+    def count_up(self):
         self.time_label.config(text=self.duration)
         self.seconds += 1
         self.update_duration()
-        self.job = self.time_label.after(1000, self.countup)
+        self.job = self.time_label.after(1000, self.count_up)
 
     def reset(self):
         self.stop()
@@ -47,7 +47,7 @@ class StopwatchFrame:
         if self.job:
             return
 
-        self.countup()
+        self.count_up()
 
     def adjust_widgets(self):
         self.time_label.grid(row=0, column=0, columnspan=2)
@@ -56,5 +56,5 @@ class StopwatchFrame:
         self.stop_button.grid(row=2, column=0, sticky=N+E+W+S)
         self.reset_button.grid(row=1, column=1, rowspan=2, sticky=N+E+W+S)
 
-        self.frame.columnconfigure(0, weight=1)
-        self.frame.columnconfigure(1, weight=1)
+        self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=1)
