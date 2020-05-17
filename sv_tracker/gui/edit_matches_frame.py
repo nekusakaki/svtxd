@@ -3,14 +3,14 @@ from tkinter import messagebox
 from tkinter import ttk
 
 
-class EditMatchesFrame:
+class EditMatchesFrame(Frame):
     def __init__(self, master, deck, refresh):
         self.deck = deck
         self.refresh = refresh
 
-        self.frame = Frame(master, padx=5, pady=5)
-        self.list_box = Listbox(self.frame, width=30)
-        self.delete_button = ttk.Button(self.frame, text="DELETE MATCH", command=self.delete_match)
+        super().__init__(master, padx=5, pady=5)
+        self.list_box = Listbox(self, width=30)
+        self.delete_button = ttk.Button(self, text="DELETE MATCH", command=self.delete_match)
 
         self.fill_listbox()
 
@@ -24,7 +24,7 @@ class EditMatchesFrame:
 
         if not confirm:
             self.delete_button.config(state=NORMAL)
-            self.frame.focus_set()
+            self.focus_set()
             return
 
         self.deck.delete_match(match_index)
@@ -32,7 +32,7 @@ class EditMatchesFrame:
         self.refresh()
         self.delete_button.config(state=NORMAL)
         self.deck.save_to_file('decks/')
-        self.frame.focus_set()
+        self.focus_set()
 
     def fill_listbox(self):
         for index, match in enumerate(self.deck.get_matches()):

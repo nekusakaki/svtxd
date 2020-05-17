@@ -42,7 +42,7 @@ class StatsFrame:
     def edit(self):
         self.edit_window = Toplevel()
         self.edit_matches_frame = EditMatchesFrame(self.edit_window, self.deck, self.refresh)
-        self.edit_matches_frame.frame.pack()
+        self.edit_matches_frame.pack()
 
 
     def adjust_widgets(self):
