@@ -1,6 +1,6 @@
 
-MAJOR_VERSION = 0
-MINOR_VERSION = 4
+MAJOR_VERSION = 1
+MINOR_VERSION = 0
 
 
 class Version:
@@ -15,4 +15,4 @@ class Version:
         self.minor_version = MINOR_VERSION
 
     def version_str(self):
-        return 'v' + str(self.major_version) + '.' + str(self.minor_version)
+        return 'v ' + str(self.major_version) + '.' + str(self.minor_version)
