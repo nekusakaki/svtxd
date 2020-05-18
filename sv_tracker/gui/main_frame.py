@@ -34,7 +34,7 @@ class MainFrame(Frame):
         self.database_menu.add_command(label='Generate Databases',
                                        command=self.generate_database_popup)
 
-        super().__init__(master, width=715, height=590)
+        super().__init__(master, width=715, height=605)
         self.add_deck_button = ttk.Button(self, text="ADD DECK", command=self.add_deck_popup)
         self.sort_buttons_frame = Frame(self)
         self.decks_canvas = Canvas(self, width=300, scrollregion=(0, 0, 300, 500), highlightthickness=0)

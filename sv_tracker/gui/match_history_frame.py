@@ -6,7 +6,7 @@ class MatchHistoryFrame(Frame):
     def __init__(self, master, deck):
         self.deck = deck
         super().__init__(master)
-        self.canvas = Canvas(self, width=300, height=150, scrollregion=(0, 0, 320, 500))
+        self.canvas = Canvas(self, width=300, height=165, scrollregion=(0, 0, 320, 500))
         self.vbar = Scrollbar(self, orient=VERTICAL)
         self.matches_frame = Frame(self.canvas, width=300)
         self.matches = []

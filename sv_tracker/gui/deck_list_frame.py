@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+from tkinter import ttk
 from PIL import ImageTk
 from sv_tracker.class_icons import ClassIcons
 from sv_tracker.gui.graphs.cost_breakdown_frame import CostBreakdownFrame
@@ -23,6 +24,11 @@ class DeckListFrame(Frame):
         self.cost_breakdown_frame = CostBreakdownFrame(self, deck)
         self.cards = {}
 
+        self.deck_code_frame = Frame(self)
+        self.deck_code_button = ttk.Button(self.deck_code_frame, text='Generate Deck Code',
+                                           command=self.get_deck_code)
+        self.deck_code_label = Label(self.deck_code_frame, width=6)
+
         self._fill_cards_frame()
         self._adjust_widgets()
 
@@ -30,6 +36,10 @@ class DeckListFrame(Frame):
         label = Label(master, image=self.tk_image, text=self.deck.name, bg="black", fg="white",
                       compound=RIGHT, anchor=E, font="Sans 12 bold")
         return label
+
+    def get_deck_code(self):
+        deck_code = self.deck.create_deck_code()
+        self.deck_code_label.config(text=deck_code)
 
     def _fill_cards_frame(self):
         card_counts = self.deck.card_counts()
@@ -58,6 +68,10 @@ class DeckListFrame(Frame):
         self.cards_canvas.bind('<Configure>', self.resize)
 
         self.cost_breakdown_frame.grid(row=2, column=0, columnspan=2, sticky=W+E+N+S)
+
+        self.deck_code_button.grid(row=0, column=0, sticky=W+E+N+S)
+        self.deck_code_label.grid(row=0, column=1, sticky=W+E+N+S)
+        self.deck_code_frame.grid(row=3, column=0, columnspan=2, sticky=W+E+N+S, pady=5)
 
         self.columnconfigure(0, weight=1)
 
