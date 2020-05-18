@@ -36,7 +36,10 @@ The App:
 - Pillow 7.1.2
 
 ## License
-TODO: Figure out a license.
+[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
+
+ - **[MIT license](http://opensource.org/licenses/mit-license.php)**
+ - Copyright 2020 © Yawn Squad.
 
 ## Authors
 - Anonzs
