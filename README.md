@@ -4,7 +4,7 @@ Shadowverse Deck Tracker is a **manual** deck tracker for Shadowverse.
 
 ## Installation
 - Requirements
-  - Windows ????
+  - Windows
 - [Download the zip file here.](TODO: Get download link.)
 
 ## Features
@@ -31,6 +31,8 @@ The App:
 - Python 3.8
 - PyInstaller 3.6
 - Tkinter
+- Matplotlib 3.2.1
+- Pillow 7.1.2
 
 ## License
 TODO: Figure out a license.
