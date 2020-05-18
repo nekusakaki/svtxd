@@ -116,7 +116,7 @@ class MainFrame(Frame):
     def add_deck(self, deck):
         self.save_deck(deck)
         self.decks.append(deck)
-        self.deck_previews[deck] = DeckPreviewFrame(self.decks_frame, deck, self.view_deck)
+        self.deck_previews[deck] = DeckPreviewFrame(self.decks_frame, deck, self.view_deck, self.delete_deck)
         self.decks_sorted = self.sort_decks()
 
         self.add_popup.destroy()
