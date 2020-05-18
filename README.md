@@ -3,9 +3,10 @@
 Shadowverse Deck Tracker is a **manual** deck tracker for Shadowverse.
 
 ## Installation
+- Latest Version: v1.0
 - Requirements
   - Windows
-- [Download the zip file here.](TODO: Get download link.)
+- [Download the zip file here.](http://www.mediafire.com/file/t655wlesyfajciq/SV_Tracker_v1.0.zip/file)
 
 ## Features
 Manual Deck Tracker:
