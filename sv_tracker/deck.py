@@ -1,7 +1,8 @@
 from sv_tracker.match_statistics import MatchStatistics
 from sv_tracker.match_history import MatchHistory
 import json
-from urllib.request import urlopen
+import urllib.request
+import urllib.parse
 from sv_tracker.card import Card
 import pickle
 import uuid
@@ -9,7 +10,7 @@ import os
 
 
 class Deck:
-    def __init__(self, name, card_ids, clan):
+    def __init__(self, name, card_ids, clan, deck_hash):
         self._card_ids = card_ids
         self._clan = clan
         self._stats = MatchStatistics()
@@ -20,19 +21,20 @@ class Deck:
         self._cost_breakdown = {}
         self.name = name
         self.uuid = str(uuid.uuid4().hex)[:4]
+        self.deck_hash = deck_hash
 
     @staticmethod
     def generate_from_deck_code(name, deck_code):
         deck_code_url = "https://shadowverse-portal.com/api/v1/deck/import?format=json&deck_code=" + deck_code + "&lang=en"
 
-        with urlopen(deck_code_url) as response:
+        with urllib.request.urlopen(deck_code_url) as response:
             source = response.read()
 
         deck_json = json.loads(source)
         if len(deck_json['data']['errors']) == 0:
             deck_hash = deck_json['data']['hash']
-            decklist_url = "https://shadowverse-portal.com/api/v1/deck?format=json&hash=" + str(deck_hash) + "&lang=en"
-            with urlopen(decklist_url) as response:
+            deck_list_url = "https://shadowverse-portal.com/api/v1/deck?format=json&hash=" + str(deck_hash) + "&lang=en"
+            with urllib.request.urlopen(deck_list_url) as response:
                 source = response.read()
             raw_json = json.loads(source)
             deck_json = raw_json['data']['deck']
@@ -40,7 +42,7 @@ class Deck:
             for card in deck_json['cards']:
                 card_ids.append(card['card_id'])
             clan = deck_json['clan']
-            return Deck(name, card_ids, clan)
+            return Deck(name, card_ids, clan, deck_hash)
         else:
             raise ValueError("Deck code does not exist.")
 
@@ -65,6 +67,18 @@ class Deck:
             except OSError as e:
                 print('Error while deleting file: ', full_path)
                 print(e)
+
+    def create_deck_code(self):
+        url = 'https://shadowverse-portal.com/api/v1/deck_code/publish?format=json&lang=en'
+        data = urllib.parse.urlencode({'hash': self.deck_hash, 'csrf_token': ''}).encode()
+        request = urllib.request.Request(url, data=data)
+        with urllib.request.urlopen(request) as response:
+            source = response.read()
+
+        raw_json = json.loads(source)
+        deck_code = raw_json['data']['deck_code']
+
+        return deck_code
 
     def rename(self, new_name):
         self.name = new_name
