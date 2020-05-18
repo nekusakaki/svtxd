@@ -2,12 +2,14 @@ from tkinter import *
 from sv_tracker.gui.main_frame import MainFrame
 import matplotlib
 
+TITLE = 'SV Deck Tracker'
+
 
 def main():
     matplotlib.use("Agg")
 
     root = Tk()
-    root.title("SV Deck Tracker XD")
+    root.title(TITLE)
 
     main_frame = MainFrame(root)
     main_frame.pack()

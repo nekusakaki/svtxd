@@ -10,6 +10,7 @@ from sv_tracker.gui.add_deck_frame import AddDeckFrame
 from sv_tracker.gui.stats_frame import StatsFrame
 from sv_tracker.gui.deck_tracker_frame import DeckTrackerFrame
 from sv_tracker.gui.database_frame import DatabaseFrame
+from sv_tracker.version import Version
 
 DECK_FOLDER = 'decks/'
 
@@ -33,7 +34,7 @@ class MainFrame(Frame):
         self.database_menu.add_command(label='Generate Databases',
                                        command=self.generate_database_popup)
 
-        super().__init__(master, width=715, height=577)
+        super().__init__(master, width=715, height=590)
         self.add_deck_button = ttk.Button(self, text="ADD DECK", command=self.add_deck_popup)
         self.sort_buttons_frame = Frame(self)
         self.decks_canvas = Canvas(self, width=300, scrollregion=(0, 0, 300, 500), highlightthickness=0)
@@ -52,6 +53,8 @@ class MainFrame(Frame):
         self.tab_frame_1 = Frame(self.deck_notebook, width=320, height=500)
         self.deck_list_frame = Frame(self.tab_frame_0, width=320, height=500)
         self.stats_frame = Frame(self.tab_frame_0, width=320, height=500)
+
+        self.version_label = Label(self, text=Version().version_str())
 
         self.fill_sort_buttons_frame()
         self.generate_deck_previews()
@@ -292,6 +295,8 @@ class MainFrame(Frame):
 
         self.deck_notebook.add(self.tab_frame_0, text='Deck List')
         self.deck_notebook.add(self.tab_frame_1, text='Match Statistics')
+
+        self.version_label.grid(row=3, column=0, columnspan=3, sticky=E)
 
         self.rowconfigure(0, weight=0)
         self.rowconfigure(1, weight=0)
