@@ -1,5 +1,6 @@
 
-CURRENT_VERSION = '0.4'
+MAJOR_VERSION = 0
+MINOR_VERSION = 4
 
 
 class Version:
@@ -10,15 +11,8 @@ class Version:
         return cls._instance
 
     def __init__(self):
-        self.major_version = 0
-        self.minor_version = 0
-
-        self.parse_version()
-
-    def parse_version(self):
-        version_split = CURRENT_VERSION.split('.')
-        self.major_version = int(version_split[0])
-        self.minor_version = int(version_split[1])
+        self.major_version = MAJOR_VERSION
+        self.minor_version = MINOR_VERSION
 
     def version_str(self):
         return 'v' + str(self.major_version) + '.' + str(self.minor_version)
