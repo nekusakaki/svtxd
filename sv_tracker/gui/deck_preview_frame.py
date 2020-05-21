@@ -1,15 +1,17 @@
 from tkinter import *
 from tkinter import messagebox
+from tkinter import simpledialog
 from PIL import ImageTk
 from sv_tracker.class_icons import ClassIcons
 
 
 class DeckPreviewFrame(Frame):
-    def __init__(self, master, deck, view_function, delete_function):
+    def __init__(self, master, deck, view_function, delete_function, rename_function):
         self.deck = deck
 
         self.view_function = view_function
         self.delete_function = delete_function
+        self.rename_function = rename_function
 
         self.class_icon = ClassIcons().get_icon(self.deck.clan())
         self.resized_image = self.class_icon.resize((50, 50))
@@ -21,6 +23,7 @@ class DeckPreviewFrame(Frame):
         self.stats_label = self.generate_stats_label(self)
 
         self.popup_menu = Menu(self, tearoff=0)
+        self.popup_menu.add_command(label='Rename Deck', command=self.rename_deck)
         self.popup_menu.add_command(label='Delete Deck', command=self.delete_deck)
 
         self.adjust_widgets()
@@ -37,6 +40,17 @@ class DeckPreviewFrame(Frame):
 
     def view_deck(self, event):
         self.view_function(self.deck)
+
+    def rename_deck(self):
+        new_name = simpledialog.askstring('Rename Deck', 'Enter new deck name for ' +
+                                          self.deck.name + ':')
+
+        if new_name is not None:
+            new_name = new_name.strip()
+            if not new_name == '':
+                self.rename_function(self.deck, new_name)
+            else:
+                messagebox.showinfo('Invalid name.', 'No name entered.')
 
     def delete_deck(self):
         confirm = messagebox.askyesno('Delete Deck',

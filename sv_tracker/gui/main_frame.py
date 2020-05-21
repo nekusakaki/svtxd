@@ -120,7 +120,8 @@ class MainFrame(Frame):
     def add_deck(self, deck):
         self.save_deck(deck)
         self.decks.append(deck)
-        self.deck_previews[deck] = DeckPreviewFrame(self.decks_frame, deck, self.view_deck, self.delete_deck)
+        self.deck_previews[deck] = DeckPreviewFrame(self.decks_frame, deck, self.view_deck,
+                                                    self.delete_deck, self.rename_deck)
         self.decks_sorted = self.sort_decks()
 
         self.add_popup.destroy()
@@ -141,6 +142,19 @@ class MainFrame(Frame):
 
         self.decks.remove(deck)
         self.deck_previews.pop(deck)
+        self.decks_sorted = self.sort_decks()
+
+        self.show_clan_decks(self.current_clan)
+
+        self.refresh()
+
+    def rename_deck(self, deck, new_name):
+        deck.delete_from_folder(DECK_FOLDER)
+        deck.rename(new_name)
+        self.save_deck(deck)
+
+        self.deck_previews[deck] = DeckPreviewFrame(self.decks_frame, deck, self.view_deck,
+                                                    self.delete_deck, self.rename_deck)
         self.decks_sorted = self.sort_decks()
 
         self.show_clan_decks(self.current_clan)
@@ -236,7 +250,8 @@ class MainFrame(Frame):
         self.deck_previews.clear()
 
         for deck in self.decks:
-            self.deck_previews[deck] = DeckPreviewFrame(self.decks_frame, deck, self.view_deck, self.delete_deck)
+            self.deck_previews[deck] = DeckPreviewFrame(self.decks_frame, deck, self.view_deck,
+                                                        self.delete_deck, self.rename_deck)
 
     def fill_decks_frame(self):
         for deck in self.displayed_decks:
