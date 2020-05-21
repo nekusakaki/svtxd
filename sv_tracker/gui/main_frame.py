@@ -94,6 +94,7 @@ class MainFrame(Frame):
         self.deck_tracker_frame = DeckTrackerFrame(self.deck_tracker, self.current_deck, self.refresh, self.save_deck)
         self.deck_tracker_frame.pack(fill=BOTH, expand=TRUE)
         self.deck_tracker_frame.bind('<Configure>', self.deck_tracker_frame.resize)
+        self.deck_tracker.geometry("")
 
     def update_database_popup(self):
         if self.database_popup:

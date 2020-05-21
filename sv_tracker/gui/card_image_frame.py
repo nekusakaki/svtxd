@@ -4,7 +4,7 @@ from sv_tracker.database_scripts.image_database_interface import ImageDatabaseIn
 
 
 class CardImageFrame(Frame):
-    START_SCALE = 0.65
+    START_SCALE = 0.4
 
     def __init__(self, master, card, count):
         image_db = ImageDatabaseInterface()

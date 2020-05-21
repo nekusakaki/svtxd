@@ -92,11 +92,10 @@ class DeckTrackerFrame(Frame):
         self.log_match_button.grid(row=3, column=0, sticky=N+E+W+S, padx=5)
 
     def resize(self, event):
-        scale = event.width / 488
+        scale = event.width / 502
         self.resize_card_images(scale)
         self.resize_counter_buttons(scale)
         self.cards_frame.configure(width=event.width, height=self.cards_frame.winfo_reqheight())
-        self.master.geometry("")
 
     def resize_card_images(self, scale):
         for card_id in self.cards:
