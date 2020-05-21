@@ -13,6 +13,8 @@ from sv_tracker.gui.database_frame import DatabaseFrame
 from sv_tracker.version import Version
 
 DECK_FOLDER = 'decks/'
+DATABASE_PATH = 'database/card_database.db'
+IMAGE_DATABASE_PATH = 'database/card_image_database.db'
 
 
 class MainFrame(Frame):
@@ -31,8 +33,8 @@ class MainFrame(Frame):
 
         self.database_menu = Menu(self.menu, tearoff=0)
         self.menu.add_cascade(label='Database', menu=self.database_menu)
-        self.database_menu.add_command(label='Generate Databases',
-                                       command=self.generate_database_popup)
+        self.database_menu.add_command(label='Update Databases',
+                                       command=self.update_database_popup)
 
         super().__init__(master, width=715, height=605)
         self.add_deck_button = ttk.Button(self, text="ADD DECK", command=self.add_deck_popup)
@@ -93,11 +95,12 @@ class MainFrame(Frame):
         self.deck_tracker_frame.pack(fill=BOTH, expand=TRUE)
         self.deck_tracker_frame.bind('<Configure>', self.deck_tracker_frame.resize)
 
-    def generate_database_popup(self):
+    def update_database_popup(self):
         if self.database_popup:
             self.database_popup.destroy()
 
         self.database_popup = Toplevel()
+        self.database_popup.title('Update Databases')
         self.database_popup.wm_transient(self.master)
         self.database_popup.resizable(width=False, height=False)
         database_frame = DatabaseFrame(self.database_popup)
@@ -109,6 +112,7 @@ class MainFrame(Frame):
             self.add_popup.destroy()
 
         self.add_popup = Toplevel()
+        self.add_popup.title('Add Deck')
         add_deck_frame = AddDeckFrame(self.add_popup, self.add_deck)
         add_deck_frame.pack()
         self.add_popup.focus_set()
@@ -240,6 +244,18 @@ class MainFrame(Frame):
             deck_preview.pack(side=TOP, fill=X, expand=TRUE, padx=5, pady=5)
 
     def view_deck(self, deck):
+        if not os.path.exists(DATABASE_PATH):
+            messagebox.showinfo("Database Error",
+                                "Card database not found. Please update your card database." +
+                                "\n\nDatabase -> Update Databases")
+            return
+
+        if not os.path.exists(IMAGE_DATABASE_PATH):
+            messagebox.showinfo("Image Database Error",
+                                "Card image database not found. Please update your card image database." +
+                                "\n\nDatabase -> Update Databases")
+            return
+
         if deck == self.current_deck:
             return
 

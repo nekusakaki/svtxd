@@ -60,7 +60,8 @@ class DeckTrackerFrame(Frame):
         try:
             cards = self.deck.cards()
         except ValueError:
-            messagebox.showinfo('Missing Cards', 'Missing cards. Please update your card database.')
+            messagebox.showinfo('Missing Cards', 'Missing cards. Please update your card database.' +
+                                '\n\nDatabase -> Update Databases')
             return
 
         for index, card_id in enumerate(card_counts):
@@ -95,6 +96,7 @@ class DeckTrackerFrame(Frame):
         self.resize_card_images(scale)
         self.resize_counter_buttons(scale)
         self.cards_frame.configure(width=event.width, height=self.cards_frame.winfo_reqheight())
+        self.master.geometry("")
 
     def resize_card_images(self, scale):
         for card_id in self.cards:

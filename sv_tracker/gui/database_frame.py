@@ -13,46 +13,69 @@ class DatabaseFrame(Frame):
         self.database_thread = None
 
         self.help_label = Label(self, text='Requires an internet connection.' +
-                                           '\nUpdate database when new expansions come out.' +
-                                           '\nGenerating databases takes a long time.')
+                                           '\nUpdate database when new expansions come out' +
+                                           '\nor balance changes happen.')
         self.card_database_label = Label(self, text='Card Database:')
         self.card_database_progress = Label(self, text='Not started')
         self.image_database_label = Label(self, text='Card Image Database:')
         self.image_database_progress = Label(self, text='Not started')
 
-        self.generate_button = ttk.Button(self, text='Generate Databases', command=self.generate_databases)
-        self.update_button = ttk.Button(self, text='Update Databases', command=self.update_databases)
+        self.balance_changes_button = ttk.Button(self, text='Balance Changes', command=self.balance_changes)
+        self.new_expansion_button = ttk.Button(self, text='New Expansion', command=self.new_expansion)
+        self.missing_databases_button = ttk.Button(self, text='Missing Databases', command=self.missing_databases)
 
         self.adjust_widgets()
 
-    def generate_databases(self):
-        self.master.grab_set()
-        self.generate_button.config(state=DISABLED)
-        self.update_button.config(state=DISABLED)
-        confirm = messagebox.askyesno('Generate Databases.',
-                                      'Are you sure you wish to generate databases?' +
-                                      '\nThis takes quite a while.' +
-                                      '\nUpdate database if you are not sure.')
+    def balance_changes(self):
+        self.start()
+        confirm = messagebox.askyesno('Balance Changes.',
+                                      'Are you sure you wish to generate databases for a balance change?' +
+                                      '\nThis takes a while.')
 
         if confirm:
-            self.database_thread = CreateDatabaseThread(self.update_card_progress_text,
+            self.database_thread = BalanceChangesThread(self.update_card_progress_text,
                                                         self.update_image_progress_text,
                                                         self.finish)
         else:
             self.finish()
 
-    def update_databases(self):
+    def new_expansion(self):
+        self.start()
+        confirm = messagebox.askyesno('New Expansion.',
+                                      'Are you sure you wish to generate databases for a new expansion?' +
+                                      '\nThis takes a while.')
+
+        if confirm:
+            self.database_thread = NewExpansionThread(self.update_card_progress_text,
+                                                      self.update_image_progress_text,
+                                                      self.finish)
+        else:
+            self.finish()
+
+    def missing_databases(self):
+        self.start()
+        confirm = messagebox.askyesno('Missing Databases.',
+                                      'Are you sure you wish to generate databases?' +
+                                      '\nThis takes a while.')
+
+        if confirm:
+            self.database_thread = MissingDatabasesThread(self.update_card_progress_text,
+                                                          self.update_image_progress_text,
+                                                          self.finish)
+        else:
+            self.finish()
+
+    def start(self):
         self.master.grab_set()
-        self.generate_button.config(state=DISABLED)
-        self.update_button.config(state=DISABLED)
-        self.database_thread = UpdateDatabaseThread(self.update_card_progress_text,
-                                                    self.update_image_progress_text,
-                                                    self.finish)
+        self.balance_changes_button.config(state=DISABLED)
+        self.new_expansion_button.config(state=DISABLED)
+        self.missing_databases_button.config(state=DISABLED)
 
     def finish(self):
         self.master.grab_release()
-        self.generate_button.config(state=NORMAL)
-        self.update_button.config(state=NORMAL)
+        self.balance_changes_button.config(state=NORMAL)
+        self.new_expansion_button.config(state=NORMAL)
+        self.missing_databases_button.config(state=NORMAL)
 
     def update_card_progress_text(self, text):
         self.card_database_progress.config(text=text)
@@ -66,8 +89,9 @@ class DatabaseFrame(Frame):
         self.card_database_progress.grid(row=2, column=0, sticky=W+E)
         self.image_database_label.grid(row=3, column=0, sticky=W)
         self.image_database_progress.grid(row=4, column=0, sticky=W+E)
-        self.generate_button.grid(row=5, column=0)
-        self.update_button.grid(row=6, column=0)
+        self.balance_changes_button.grid(row=5, column=0)
+        self.new_expansion_button.grid(row=6, column=0)
+        self.missing_databases_button.grid(row=7, column=0)
 
         self.master.protocol('WM_DELETE_WINDOW', self.close_popup)
 
@@ -79,7 +103,22 @@ class DatabaseFrame(Frame):
         self.master.destroy()
 
 
-class UpdateDatabaseThread(threading.Thread):
+class BalanceChangesThread(threading.Thread):
+    def __init__(self, card_print_function, image_print_function, finish_function):
+        super().__init__(name='Database-Thread')
+        self.daemon = True
+        self.card_print_function = card_print_function
+        self.image_print_function = image_print_function
+        self.finish_function = finish_function
+        self.start()
+
+    def run(self):
+        create_card_database(self.card_print_function)
+        update_card_image_database(self.image_print_function)
+        self.finish_function()
+
+
+class NewExpansionThread(threading.Thread):
     def __init__(self, card_print_function, image_print_function, finish_function):
         super().__init__(name='Database-Thread')
         self.daemon = True
@@ -94,7 +133,7 @@ class UpdateDatabaseThread(threading.Thread):
         self.finish_function()
 
 
-class CreateDatabaseThread(threading.Thread):
+class MissingDatabasesThread(threading.Thread):
     def __init__(self, card_print_function, image_print_function, finish_function):
         super().__init__(name='Database-Thread')
         self.daemon = True
@@ -104,6 +143,6 @@ class CreateDatabaseThread(threading.Thread):
         self.start()
 
     def run(self):
-        create_card_database(self.card_print_function)
-        create_card_image_database(self.image_print_function)
+        update_card_database(self.card_print_function)
+        update_card_image_database(self.image_print_function)
         self.finish_function()

@@ -46,7 +46,8 @@ class DeckListFrame(Frame):
         try:
             cards = self.deck.cards()
         except ValueError:
-            messagebox.showinfo('Missing Cards', 'Missing cards. Please update your card database.')
+            messagebox.showinfo('Missing Cards', 'Missing cards. Please update your card database.' +
+                                '\n\nDatabase -> Update Databases')
             return
 
         for index, card_id in enumerate(card_counts):
